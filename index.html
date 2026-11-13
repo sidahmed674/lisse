@@ -1,0 +1,3540 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>LISSE — Luxury Perfumes</title>
+    <meta
+      name="description"
+      content="An interactive 3D luxury perfume exhibition featuring artisanal haute parfumerie on an infinite editorial shelf."
+    />
+    <meta property="og:title" content="LISSE — Luxury Perfumes" />
+    <meta
+      property="og:description"
+      content="An interactive 3D luxury perfume exhibition featuring artisanal haute parfumerie on an infinite editorial shelf."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter+Tight:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --accent: #A50E85;
+        --paper: #F0F0F0;
+        --ink: #000000;
+        --sheet: #F0F0F0;
+        --muted: #777777;
+        --rule: rgba(0, 0, 0, 0.85);
+        --hairline: rgba(0, 0, 0, 0.14);
+        --font-serif: "Newsreader", "Cormorant Garamond", Georgia, serif;
+        --font-display: "Cormorant Garamond", "Newsreader", Georgia, serif;
+        --font-sans: "Inter Tight", system-ui, -apple-system, sans-serif;
+        --H: min(46vh, 31vw);
+        --header-h: 84px;
+        --pad-x: 32px;
+      }
+
+      @media (max-width: 768px) {
+        :root {
+          --H: min(60vw, 40svh);
+          --header-h: 64px;
+          --pad-x: 16px;
+        }
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: var(--paper);
+        color: var(--ink);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        user-select: none;
+        -webkit-user-select: none;
+      }
+
+      body.has-custom-cursor,
+      body.has-custom-cursor button,
+      body.has-custom-cursor a,
+      body.has-custom-cursor [role="button"] {
+        cursor: none;
+      }
+
+      body.has-custom-cursor input,
+      body.has-custom-cursor textarea,
+      body.has-custom-cursor select {
+        cursor: text;
+      }
+
+      button {
+        font-family: inherit;
+        background: none;
+        border: none;
+        padding: 0;
+        color: inherit;
+        cursor: pointer;
+      }
+
+      button:focus-visible,
+      a:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      textarea:focus-visible {
+        outline: 1.5px solid var(--accent);
+        outline-offset: 3px;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      /* ── FIXED TOP BRAND HEADER ─────────────────────────────────── */
+      .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--header-h);
+        padding: 0 var(--pad-x);
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        z-index: 40;
+        pointer-events: none;
+      }
+
+      .site-header > * {
+        pointer-events: auto;
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        justify-self: start;
+      }
+
+      .boxed-label-btn {
+        height: 24px;
+        padding: 0 9px;
+        border: 1px solid var(--rule);
+        font-family: var(--font-sans);
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+        background: transparent;
+        color: var(--ink);
+        transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+
+      .boxed-label-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      .brand-mark {
+        justify-self: center;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        line-height: 1;
+        text-decoration: none;
+        color: var(--accent);
+      }
+
+      .brand-wordmark {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: clamp(24px, 2.5vw, 34px);
+        letter-spacing: 0.18em;
+        text-indent: 0.18em;
+        color: var(--accent);
+      }
+
+      .brand-descriptor {
+        margin-top: 3px;
+        font-family: var(--font-sans);
+        font-weight: 500;
+        font-size: 9px;
+        letter-spacing: 0.34em;
+        text-indent: 0.34em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .header-right {
+        justify-self: end;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .collection-tag {
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink);
+        white-space: nowrap;
+      }
+
+      .lang-switch {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid rgba(0, 0, 0, 0.35);
+        height: 23px;
+      }
+
+      .lang-btn {
+        height: 100%;
+        padding: 0 6px;
+        font-size: 9.5px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        transition: background-color 160ms ease, color 160ms ease;
+      }
+
+      .lang-btn[aria-pressed="true"] {
+        background-color: var(--accent);
+        color: #ffffff;
+      }
+
+      @media (max-width: 768px) {
+        .collection-tag {
+          display: none;
+        }
+        .boxed-label-btn {
+          padding: 0 7px;
+          font-size: 9.5px;
+        }
+        .brand-wordmark {
+          font-size: 22px;
+        }
+        .brand-descriptor {
+          font-size: 7.5px;
+          letter-spacing: 0.26em;
+          text-indent: 0.26em;
+        }
+      }
+
+      /* ── MAIN EXHIBITION STAGE ──────────────────────────────────── */
+      .stage {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        padding-top: var(--header-h);
+        padding-bottom: 44px;
+      }
+
+      /* ── COLLECTION CATEGORY NAVIGATION ─────────────────────────── */
+      .category-nav-wrap {
+        position: relative;
+        z-index: 25;
+        margin-bottom: clamp(14px, 3vh, 30px);
+        max-width: calc(100vw - 32px);
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .category-nav-wrap::-webkit-scrollbar {
+        display: none;
+      }
+
+      .category-nav {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .category-indicator {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 23px;
+        width: 40px;
+        background-color: var(--accent);
+        pointer-events: none;
+        z-index: 0;
+        transform-origin: left center;
+        will-change: transform;
+      }
+
+      .category-tab {
+        position: relative;
+        z-index: 1;
+        height: 23px;
+        padding: 0 11px;
+        border: 1px solid var(--rule);
+        font-family: var(--font-sans);
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--ink);
+        white-space: nowrap;
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        transition: color 220ms cubic-bezier(0.2, 0.8, 0.2, 1), border-color 220ms ease;
+      }
+
+      .category-tab[aria-selected="true"] {
+        color: #ffffff;
+        border-color: var(--accent);
+      }
+
+      .category-tab:hover:not([aria-selected="true"]) {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* ── 3D INFINITE PERFUME SHELF ──────────────────────────────── */
+      .shelf-viewport {
+        position: relative;
+        width: 100%;
+        height: calc(var(--H) * 1.32);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        perspective: 2200px;
+        perspective-origin: 50% 46%;
+        touch-action: pan-y;
+        z-index: 15;
+      }
+
+      .shelf-track {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        pointer-events: none;
+      }
+
+      /* Physical architectural shelf line beneath standing bottles */
+      .shelf-plinth {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: calc(50% + var(--H) * 0.50);
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 0.06) 0%,
+          rgba(0, 0, 0, 0.55) 14%,
+          rgba(0, 0, 0, 0.72) 50%,
+          rgba(0, 0, 0, 0.55) 86%,
+          rgba(0, 0, 0, 0.06) 100%
+        );
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .shelf-plinth::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 1px;
+        height: 22px;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.065) 0%, rgba(0, 0, 0, 0) 100%);
+      }
+
+      /* 3D Bottle Item Container */
+      .bottle-item {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform-style: preserve-3d;
+        pointer-events: auto;
+        will-change: transform;
+        cursor: inherit;
+      }
+
+      .bottle-item:focus-visible {
+        outline: 1.5px solid var(--accent);
+        outline-offset: 6px;
+      }
+
+      .bottle-shadow {
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        bottom: -7px;
+        height: 14px;
+        border-radius: 50%;
+        background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.34) 0%, rgba(0, 0, 0, 0.12) 48%, rgba(0, 0, 0, 0) 76%);
+        transform-origin: center center;
+        pointer-events: none;
+        will-change: transform;
+      }
+
+      .bottle-prism {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        will-change: transform;
+      }
+
+      /* Front photorealistic bottle face */
+      .bottle-face-front {
+        position: absolute;
+        inset: 0;
+        transform-style: preserve-3d;
+        backface-visibility: visible;
+      }
+
+      .bottle-face-front img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        pointer-events: none;
+        -webkit-user-drag: none;
+        will-change: filter;
+      }
+
+      /* 3D Side/Profile Flacon Thickness (visible when standing inside the shelf) */
+      .bottle-face-side {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        transform-origin: right center;
+        pointer-events: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        backface-visibility: visible;
+      }
+
+      .bottle-face-side-left {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        transform-origin: left center;
+        pointer-events: none;
+        backface-visibility: visible;
+      }
+
+      .side-cap {
+        width: 58%;
+        height: 22%;
+        border-radius: 2px 2px 1px 1px;
+        box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.35), inset -1px 0 0 rgba(0, 0, 0, 0.25);
+      }
+
+      .side-collar {
+        width: 44%;
+        height: 5%;
+      }
+
+      .side-body {
+        width: 96%;
+        height: 73%;
+        border-radius: 3px;
+        position: relative;
+        overflow: hidden;
+        box-shadow:
+          inset 2px 0 6px rgba(255, 255, 255, 0.32),
+          inset -2px 0 6px rgba(0, 0, 0, 0.28),
+          0 0 0 0.5px rgba(0, 0, 0, 0.16);
+      }
+
+      .side-body::after {
+        content: "";
+        position: absolute;
+        top: 12%;
+        bottom: 12%;
+        left: 18%;
+        width: 16%;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.08));
+      }
+
+      .side-label-strip {
+        position: absolute;
+        top: 26%;
+        bottom: 34%;
+        left: 6%;
+        right: 6%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-sans);
+        font-size: 7px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        text-transform: uppercase;
+        border-top: 0.5px solid rgba(0, 0, 0, 0.25);
+        border-bottom: 0.5px solid rgba(0, 0, 0, 0.25);
+      }
+
+      /* ── ACTIVE PERFUME PLAY / DISCOVER INDICATOR ───────────────── */
+      .play-indicator {
+        position: fixed;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 1px solid var(--accent);
+        background-color: var(--paper);
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 26;
+        left: 50%;
+        top: 50%;
+        will-change: transform;
+        box-shadow: 0 6px 20px rgba(165, 14, 133, 0.12);
+      }
+
+      .play-indicator:hover {
+        background-color: var(--accent);
+        color: #ffffff;
+      }
+
+      .play-indicator svg {
+        width: 15px;
+        height: 15px;
+        display: block;
+      }
+
+      /* ── CAPTION & PREV/NEXT CONTROLS ───────────────────────────── */
+      .caption-bar {
+        position: relative;
+        z-index: 25;
+        width: min(720px, calc(100vw - 32px));
+        margin-top: clamp(14px, 2.6vh, 26px);
+        display: grid;
+        grid-template-columns: 44px 1fr 44px;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .nav-arrow-btn {
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(0, 0, 0, 0.24);
+        background-color: var(--paper);
+        color: var(--ink);
+        transition: border-color 180ms ease, color 180ms ease, transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+
+      .nav-arrow-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      .nav-arrow-btn:active {
+        transform: scale(0.94);
+      }
+
+      .nav-arrow-btn svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .caption-stack {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        min-width: 0;
+      }
+
+      .mask-line {
+        position: relative;
+        overflow: hidden;
+        display: block;
+        width: 100%;
+      }
+
+      .mask-line-inner {
+        display: block;
+        will-change: transform;
+      }
+
+      .caption-title {
+        font-family: var(--font-serif);
+        font-weight: 400;
+        font-size: clamp(22px, 2.5vw, 32px);
+        line-height: 1.15;
+        letter-spacing: 0.02em;
+        color: var(--ink);
+      }
+
+      .caption-meta {
+        font-family: var(--font-sans);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        line-height: 1.3;
+        color: var(--ink);
+      }
+
+      .caption-meta .accent-cat {
+        color: var(--accent);
+      }
+
+      .caption-sub {
+        font-family: var(--font-sans);
+        font-size: 10.5px;
+        font-weight: 400;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        line-height: 1.3;
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* ── FIXED FOOTER ───────────────────────────────────────────── */
+      .site-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 44px;
+        padding: 0 var(--pad-x);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 30;
+        font-family: var(--font-sans);
+        font-size: 10.5px;
+        font-weight: 500;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: var(--ink);
+        pointer-events: none;
+      }
+
+      .site-footer a,
+      .site-footer button {
+        pointer-events: auto;
+        text-decoration: none;
+        color: var(--ink);
+        transition: color 180ms ease;
+      }
+
+      .site-footer a:hover,
+      .site-footer button:hover {
+        color: var(--accent);
+      }
+
+      .footer-links {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* ── PAPER GRAIN LAYER ──────────────────────────────────────── */
+      .paper-grain {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 35;
+        mix-blend-mode: multiply;
+        opacity: 0.55;
+      }
+
+      /* ── CUSTOM CURSOR ──────────────────────────────────────────── */
+      .custom-cursor {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 58px;
+        height: 58px;
+        margin-left: -29px;
+        margin-top: -29px;
+        pointer-events: none;
+        z-index: 200;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        will-change: transform;
+      }
+
+      body.has-custom-cursor .custom-cursor {
+        display: flex;
+      }
+
+      .cursor-ring {
+        position: relative;
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        border: 1px solid var(--ink);
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
+          background-color 220ms ease,
+          border-color 220ms ease;
+      }
+
+      .cursor-dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background-color: var(--ink);
+        transition: transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+
+      .cursor-label {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-family: var(--font-sans);
+        font-size: 6.5px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        line-height: 1.25;
+        text-transform: uppercase;
+        transform: scale(0);
+        transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+
+      .custom-cursor.is-hover-bottle .cursor-ring {
+        transform: scale(0.72);
+      }
+
+      .custom-cursor.is-button .cursor-ring {
+        transform: scale(0.55);
+      }
+
+      .custom-cursor.is-open .cursor-ring {
+        transform: scale(1.75);
+        background-color: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .custom-cursor.is-open .cursor-dot {
+        transform: scale(0);
+      }
+
+      .custom-cursor.is-open .cursor-label {
+        transform: scale(0.5714);
+      }
+
+      /* ── CINEMATIC DETAIL SHEET ─────────────────────────────────── */
+      .detail-sheet {
+        position: fixed;
+        inset: 0;
+        background-color: var(--sheet);
+        z-index: 80;
+        visibility: hidden;
+        pointer-events: none;
+        overflow-y: auto;
+        overflow-x: hidden;
+        will-change: clip-path, transform;
+      }
+
+      .detail-sheet.is-visible {
+        visibility: visible;
+        pointer-events: auto;
+      }
+
+      .detail-topbar {
+        position: sticky;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--header-h);
+        padding: 0 var(--pad-x);
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        background-color: var(--sheet);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        z-index: 10;
+      }
+
+      .detail-topbar-brand {
+        justify-self: center;
+        text-align: center;
+        color: var(--accent);
+      }
+
+      .detail-topbar-right {
+        justify-self: end;
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .detail-grid {
+        max-width: 1360px;
+        margin: 0 auto;
+        min-height: calc(100vh - var(--header-h));
+        padding: clamp(28px, 4vw, 56px) var(--pad-x) calc(56px + env(safe-area-inset-bottom, 0px));
+        display: grid;
+        grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+        gap: clamp(32px, 5vw, 80px);
+        align-items: center;
+      }
+
+      .detail-info {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .detail-subtitle {
+        font-family: var(--font-sans);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .detail-title {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(40px, 5.2vw, 72px);
+        line-height: 0.98;
+        letter-spacing: 0.01em;
+        color: var(--ink);
+        text-wrap: balance;
+      }
+
+      .detail-metadata {
+        font-family: var(--font-sans);
+        font-size: 11.5px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .detail-description {
+        margin: 0;
+        font-family: var(--font-serif);
+        font-size: clamp(16px, 1.35vw, 19px);
+        line-height: 1.6;
+        color: var(--ink);
+        max-width: 56ch;
+      }
+
+      .pyramid {
+        display: grid;
+        grid-template-columns: 1fr;
+        border-top: 1px solid var(--hairline);
+      }
+
+      .pyramid-row {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 16px;
+        align-items: baseline;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .pyramid-label {
+        font-family: var(--font-sans);
+        font-size: 10.5px;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .pyramid-notes {
+        font-family: var(--font-sans);
+        font-size: 12.5px;
+        font-weight: 500;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: var(--ink);
+      }
+
+      .detail-commerce-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 16px;
+        padding-top: 6px;
+      }
+
+      .detail-price {
+        font-family: var(--font-display);
+        font-size: clamp(28px, 3vw, 38px);
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: var(--accent);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .detail-availability {
+        font-family: var(--font-sans);
+        font-size: 10.5px;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink);
+      }
+
+      .detail-availability.is-out {
+        color: var(--muted);
+      }
+
+      .detail-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding-top: 6px;
+      }
+
+      .btn-primary {
+        height: 46px;
+        padding: 0 28px;
+        background-color: var(--accent);
+        border: 1px solid var(--accent);
+        color: #ffffff;
+        font-family: var(--font-sans);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+        transition: background-color 180ms ease, color 180ms ease, transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        background-color: var(--ink);
+        border-color: var(--ink);
+      }
+
+      .btn-primary:disabled {
+        background-color: var(--muted);
+        border-color: var(--muted);
+        cursor: not-allowed;
+      }
+
+      .btn-secondary {
+        height: 46px;
+        padding: 0 24px;
+        background-color: transparent;
+        border: 1px solid var(--rule);
+        color: var(--ink);
+        font-family: var(--font-sans);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+        transition: border-color 180ms ease, color 180ms ease;
+      }
+
+      .btn-secondary:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* ── RIGHT COLUMN: POSTER INK-SPREAD SVG MASK ───────────────── */
+      .detail-poster-col {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .poster-frame {
+        position: relative;
+        width: min(490px, 100%);
+        aspect-ratio: 500 / 920;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .poster-svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+        overflow: visible;
+      }
+
+      /* ── ORDERING DRAWER PANEL ──────────────────────────────────── */
+      .order-backdrop {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.28);
+        z-index: 120;
+        visibility: hidden;
+        pointer-events: none;
+        clip-path: inset(0 0 0 100%);
+      }
+
+      .order-backdrop.is-open {
+        visibility: visible;
+        pointer-events: auto;
+      }
+
+      .order-panel {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(500px, 100vw);
+        background-color: var(--paper);
+        border-left: 1px solid var(--rule);
+        z-index: 130;
+        visibility: hidden;
+        pointer-events: none;
+        overflow-y: auto;
+        padding: 28px clamp(20px, 4vw, 36px) calc(36px + env(safe-area-inset-bottom, 0px));
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        will-change: transform;
+      }
+
+      .order-panel.is-open {
+        visibility: visible;
+        pointer-events: auto;
+      }
+
+      .order-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .order-heading {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 26px;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+      }
+
+      .order-product-summary {
+        display: grid;
+        grid-template-columns: 64px 1fr auto;
+        gap: 16px;
+        align-items: center;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--hairline);
+      }
+
+      .order-thumb {
+        width: 64px;
+        height: 84px;
+        object-fit: contain;
+        display: block;
+      }
+
+      .order-prod-name {
+        font-family: var(--font-serif);
+        font-size: 19px;
+        line-height: 1.2;
+      }
+
+      .order-prod-meta {
+        margin-top: 4px;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .qty-stepper {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid var(--rule);
+        height: 36px;
+      }
+
+      .qty-btn {
+        width: 34px;
+        height: 100%;
+        font-size: 15px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .qty-btn:hover {
+        color: var(--accent);
+      }
+
+      .qty-val {
+        min-width: 30px;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .order-form {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .field-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .field-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .field-input {
+        width: 100%;
+        height: 42px;
+        padding: 0 12px;
+        background-color: transparent;
+        border: 1px solid rgba(0, 0, 0, 0.28);
+        font-family: var(--font-sans);
+        font-size: 13.5px;
+        color: var(--ink);
+        border-radius: 0;
+        transition: border-color 160ms ease;
+      }
+
+      .field-input:focus {
+        border-color: var(--accent);
+        outline: none;
+      }
+
+      textarea.field-input {
+        height: 76px;
+        padding: 10px 12px;
+        resize: vertical;
+      }
+
+      .order-totals {
+        padding: 14px 0;
+        border-top: 1px solid var(--hairline);
+        border-bottom: 1px solid var(--hairline);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .total-line {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        font-size: 11.5px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .total-line.is-grand {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--ink);
+      }
+
+      .total-line.is-grand .total-amount {
+        color: var(--accent);
+        font-size: 18px;
+        font-family: var(--font-display);
+      }
+
+      .order-error {
+        font-size: 11.5px;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        min-height: 16px;
+      }
+
+      .order-handoff {
+        border: 1px solid var(--accent);
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .order-handoff[hidden] {
+        display: none;
+      }
+
+      .order-handoff-note {
+        font-size: 12px;
+        line-height: 1.5;
+        color: var(--ink);
+        margin: 0;
+      }
+
+      .order-handoff-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .wa-launch-link {
+        text-decoration: none;
+        flex: 1;
+      }
+
+      /* ── RTL SUPPORT FOR ARABIC ─────────────────────────────────── */
+      [dir="rtl"] .detail-info,
+      [dir="rtl"] .order-panel {
+        text-align: right;
+      }
+
+      /* ── MOBILE RESPONSIVE DETAIL ORDERING (SECTION 23) ─────────── */
+      @media (max-width: 860px) {
+        .detail-grid {
+          grid-template-columns: 1fr;
+          gap: 28px;
+          padding-top: 20px;
+          align-items: start;
+        }
+
+        /* Mobile Order: 1. Image, 2. Title/Info, ... */
+        .detail-poster-col {
+          order: 1;
+        }
+
+        .detail-info {
+          order: 2;
+        }
+
+        .poster-frame {
+          width: min(300px, 76vw);
+          aspect-ratio: 500 / 740;
+        }
+
+        .pyramid-row {
+          grid-template-columns: 110px 1fr;
+        }
+
+        .field-row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .cursor-ring,
+        .cursor-dot,
+        .cursor-label,
+        .boxed-label-btn,
+        .category-tab,
+        .nav-arrow-btn,
+        .btn-primary,
+        .btn-secondary {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- FIXED BRAND HEADER -->
+    <header class="site-header" role="banner">
+      <div class="header-left">
+        <button
+          id="header-back-btn"
+          type="button"
+          class="boxed-label-btn"
+          data-cursor="button"
+          aria-label="Return to featured fragrance"
+        >
+          BACK / RETOUR
+        </button>
+      </div>
+
+      <a href="#exhibition" id="brand-home-link" class="brand-mark" data-cursor="button">
+        <span class="brand-wordmark">LISSE</span>
+        <span class="brand-descriptor">LUXURY PERFUMES</span>
+      </a>
+
+      <div class="header-right">
+        <span class="collection-tag" id="collection-year-label">COLLECTION 2026</span>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" class="lang-btn" data-lang="en" aria-pressed="true" data-cursor="button">EN</button>
+          <button type="button" class="lang-btn" data-lang="fr" aria-pressed="false" data-cursor="button">FR</button>
+          <button type="button" class="lang-btn" data-lang="ar" aria-pressed="false" data-cursor="button">AR</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN EXHIBITION STAGE -->
+    <main class="stage" id="exhibition">
+      <!-- COLLECTION CATEGORY NAVIGATION -->
+      <nav class="category-nav-wrap" aria-label="Fragrance categories">
+        <div class="category-nav" role="tablist" id="category-tabs">
+          <div class="category-indicator" id="category-indicator" aria-hidden="true"></div>
+          <button type="button" class="category-tab" role="tab" aria-selected="true" data-filter="all" data-cursor="button">ALL</button>
+          <button type="button" class="category-tab" role="tab" aria-selected="false" data-filter="floral" data-cursor="button">FLORAL</button>
+          <button type="button" class="category-tab" role="tab" aria-selected="false" data-filter="woody" data-cursor="button">WOODY</button>
+          <button type="button" class="category-tab" role="tab" aria-selected="false" data-filter="oriental" data-cursor="button">ORIENTAL</button>
+          <button type="button" class="category-tab" role="tab" aria-selected="false" data-filter="fresh" data-cursor="button">FRESH</button>
+        </div>
+      </nav>
+
+      <!-- 3D INFINITE PERFUME SHELF -->
+      <section class="shelf-viewport" id="shelf-viewport" aria-label="Luxury perfume exhibition shelf">
+        <div class="shelf-plinth" aria-hidden="true"></div>
+        <div class="shelf-track" id="shelf-track"></div>
+      </section>
+
+      <!-- ACTIVE PERFUME PLAY / DISCOVER INDICATOR -->
+      <button
+        type="button"
+        class="play-indicator"
+        id="play-indicator"
+        data-cursor="open"
+        aria-label="Open selected perfume details"
+      >
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+          <path d="M3.5 8h9" />
+          <path d="M8.5 4l4 4-4 4" />
+        </svg>
+      </button>
+
+      <!-- CAPTION & PREV/NEXT CONTROLS -->
+      <div class="caption-bar">
+        <button
+          type="button"
+          class="nav-arrow-btn"
+          id="prev-btn"
+          data-cursor="button"
+          aria-label="Previous perfume"
+        >
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+            <path d="M10.5 3L5.5 8l5 5" />
+          </svg>
+        </button>
+
+        <div class="caption-stack" aria-live="polite" aria-atomic="true">
+          <div class="mask-line">
+            <span class="mask-line-inner caption-title" id="caption-title">NOIR ÉTERNEL</span>
+          </div>
+          <div class="mask-line">
+            <span class="mask-line-inner caption-meta" id="caption-meta">
+              <span class="accent-cat">WOODY ORIENTAL</span> / EAU DE PARFUM
+            </span>
+          </div>
+          <div class="mask-line">
+            <span class="mask-line-inner caption-sub" id="caption-sub">100 ML / COLLECTION 001</span>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="nav-arrow-btn"
+          id="next-btn"
+          data-cursor="button"
+          aria-label="Next perfume"
+        >
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+            <path d="M5.5 3l5 5-5 5" />
+          </svg>
+        </button>
+      </div>
+    </main>
+
+    <!-- FIXED FOOTER -->
+    <footer class="site-footer" role="contentinfo">
+      <span id="footer-copy">© LISSE LUXURY PERFUMES</span>
+      <div class="footer-links">
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" data-cursor="button">INSTAGRAM</a>
+        <span aria-hidden="true">/</span>
+        <button type="button" id="footer-contact-btn" data-cursor="button">CONTACT</button>
+      </div>
+    </footer>
+
+    <!-- PAPER GRAIN OVERLAY (ABOVE SHELF & CAPTION, BELOW DETAIL SHEET) -->
+    <svg class="paper-grain" aria-hidden="true">
+      <filter id="lisse-paper-grain">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.85"
+          numOctaves="3"
+          stitchTiles="stitch"
+          result="noise"
+        />
+        <feColorMatrix
+          type="matrix"
+          values="0.16 0 0 0 0.80
+                  0 0.16 0 0 0.79
+                  0 0.16 0 0 0.78
+                  0 0 0 0.28 0"
+        />
+      </filter>
+      <rect width="100%" height="100%" filter="url(#lisse-paper-grain)" />
+    </svg>
+
+    <!-- CINEMATIC FULL-SCREEN DETAIL SHEET -->
+    <section
+      class="detail-sheet"
+      id="detail-sheet"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="detail-title"
+      aria-hidden="true"
+    >
+      <div class="detail-topbar">
+        <div class="header-left">
+          <button
+            type="button"
+            class="boxed-label-btn"
+            id="detail-close-top"
+            data-cursor="button"
+          >
+            BACK / RETOUR
+          </button>
+        </div>
+        <div class="detail-topbar-brand">
+          <span class="brand-wordmark" style="font-size: 22px;">LISSE</span>
+        </div>
+        <div class="detail-topbar-right" id="detail-topbar-code">NO. 001</div>
+      </div>
+
+      <div class="detail-grid" id="detail-grid">
+        <!-- LEFT COLUMN: EDITORIAL PRODUCT INFORMATION -->
+        <div class="detail-info">
+          <div class="mask-line">
+            <span class="mask-line-inner detail-subtitle" id="detail-subtitle">LISSE COLLECTION / NO. 001</span>
+          </div>
+
+          <div class="mask-line">
+            <h1 class="mask-line-inner detail-title" id="detail-title">NOIR ÉTERNEL</h1>
+          </div>
+
+          <div class="mask-line">
+            <div class="mask-line-inner detail-metadata" id="detail-metadata">
+              EAU DE PARFUM / 100 ML / UNISEX
+            </div>
+          </div>
+
+          <div class="mask-line">
+            <p class="mask-line-inner detail-description" id="detail-description"></p>
+          </div>
+
+          <div class="pyramid" aria-label="Fragrance notes">
+            <div class="pyramid-row">
+              <div class="mask-line">
+                <span class="mask-line-inner pyramid-label" id="label-top-notes">TOP NOTES</span>
+              </div>
+              <div class="mask-line">
+                <span class="mask-line-inner pyramid-notes" id="detail-notes-top"></span>
+              </div>
+            </div>
+            <div class="pyramid-row">
+              <div class="mask-line">
+                <span class="mask-line-inner pyramid-label" id="label-heart-notes">HEART NOTES</span>
+              </div>
+              <div class="mask-line">
+                <span class="mask-line-inner pyramid-notes" id="detail-notes-heart"></span>
+              </div>
+            </div>
+            <div class="pyramid-row">
+              <div class="mask-line">
+                <span class="mask-line-inner pyramid-label" id="label-base-notes">BASE NOTES</span>
+              </div>
+              <div class="mask-line">
+                <span class="mask-line-inner pyramid-notes" id="detail-notes-base"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mask-line">
+            <div class="mask-line-inner detail-commerce-row">
+              <span class="detail-price" id="detail-price">24 500 DZD</span>
+              <span class="detail-availability" id="detail-availability">AVAILABLE</span>
+            </div>
+          </div>
+
+          <div class="mask-line">
+            <div class="mask-line-inner detail-actions">
+              <button
+                type="button"
+                class="btn-primary"
+                id="detail-order-btn"
+                data-cursor="button"
+              >
+                ORDER NOW / COMMANDER
+              </button>
+              <button
+                type="button"
+                class="btn-secondary"
+                id="detail-back-btn"
+                data-cursor="button"
+              >
+                BACK TO COLLECTION
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: LARGE PRODUCT PHOTOGRAPHY WITH INK-SPREAD SVG MASK -->
+        <div class="detail-poster-col">
+          <div class="poster-frame" id="poster-frame">
+            <svg
+              class="poster-svg"
+              viewBox="0 0 500 920"
+              preserveAspectRatio="xMidYMid meet"
+              aria-hidden="true"
+            >
+              <defs>
+                <filter id="ink-bleed" x="-25%" y="-25%" width="150%" height="150%">
+                  <feTurbulence
+                    type="fractalNoise"
+                    baseFrequency="0.024"
+                    numOctaves="4"
+                    seed="11"
+                    result="turb"
+                  />
+                  <feDisplacementMap
+                    in="SourceGraphic"
+                    in2="turb"
+                    scale="54"
+                    xChannelSelector="R"
+                    yChannelSelector="G"
+                  />
+                </filter>
+                <mask id="ink-reveal-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="500" height="920">
+                  <rect x="0" y="0" width="500" height="920" fill="black" />
+                  <g filter="url(#ink-bleed)">
+                    <circle class="ink-dot" cx="150" cy="330" r="0" fill="white" />
+                    <circle class="ink-dot" cx="340" cy="600" r="0" fill="white" />
+                    <circle class="ink-dot" cx="250" cy="120" r="0" fill="white" />
+                    <circle class="ink-dot" cx="90" cy="760" r="0" fill="white" />
+                    <circle class="ink-dot" cx="400" cy="250" r="0" fill="white" />
+                    <circle class="ink-dot" cx="260" cy="860" r="0" fill="white" />
+                    <circle class="ink-dot" cx="230" cy="470" r="0" fill="white" />
+                  </g>
+                </mask>
+              </defs>
+              <image
+                id="detail-poster-img"
+                href=""
+                x="24"
+                y="24"
+                width="452"
+                height="872"
+                preserveAspectRatio="xMidYMid meet"
+                mask="url(#ink-reveal-mask)"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT ORDERING DRAWER -->
+    <div class="order-backdrop" id="order-backdrop" aria-hidden="true"></div>
+    <aside
+      class="order-panel"
+      id="order-panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="order-heading"
+      aria-hidden="true"
+    >
+      <div class="order-header">
+        <h2 class="order-heading" id="order-heading">Order Reservation</h2>
+        <button type="button" class="boxed-label-btn" id="order-close-btn" data-cursor="button">
+          CLOSE
+        </button>
+      </div>
+
+      <div class="order-product-summary">
+        <img id="order-thumb" class="order-thumb" src="" alt="" />
+        <div>
+          <div class="order-prod-name" id="order-prod-name">NOIR ÉTERNEL</div>
+          <div class="order-prod-meta" id="order-prod-meta">100 ML · 24 500 DZD</div>
+        </div>
+        <div class="qty-stepper" aria-label="Quantity">
+          <button type="button" class="qty-btn" id="qty-dec" data-cursor="button" aria-label="Decrease quantity">−</button>
+          <span class="qty-val" id="qty-val">1</span>
+          <button type="button" class="qty-btn" id="qty-inc" data-cursor="button" aria-label="Increase quantity">+</button>
+        </div>
+      </div>
+
+      <form class="order-form" id="order-form" novalidate>
+        <div class="field-group">
+          <label class="field-label" for="cust-name" id="lbl-name">Full Name</label>
+          <input class="field-input" id="cust-name" name="name" type="text" required autocomplete="name" placeholder="Amira Benali" />
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="cust-phone" id="lbl-phone">Phone Number</label>
+          <input class="field-input" id="cust-phone" name="phone" type="tel" required autocomplete="tel" placeholder="0550 00 00 00" />
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label" for="cust-wilaya" id="lbl-wilaya">Wilaya</label>
+            <select class="field-input" id="cust-wilaya" name="wilaya" required></select>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cust-commune" id="lbl-commune">Commune</label>
+            <input class="field-input" id="cust-commune" name="commune" type="text" required placeholder="Hydra" />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="cust-address" id="lbl-address">Delivery Address</label>
+          <input class="field-input" id="cust-address" name="address" type="text" required autocomplete="street-address" placeholder="Rue, N°, Bâtiment..." />
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="cust-notes" id="lbl-notes">Order Notes (Optional)</label>
+          <textarea class="field-input" id="cust-notes" name="notes" placeholder="Gift wrap, preferred delivery hours..."></textarea>
+        </div>
+
+        <div class="order-totals">
+          <div class="total-line">
+            <span id="lbl-unit-price">Unit Price</span>
+            <span id="order-unit-price">24 500 DZD</span>
+          </div>
+          <div class="total-line">
+            <span id="lbl-qty-summary">Quantity</span>
+            <span id="order-qty-summary">1</span>
+          </div>
+          <div class="total-line is-grand">
+            <span id="lbl-total">Total</span>
+            <span class="total-amount" id="order-total-price">24 500 DZD</span>
+          </div>
+        </div>
+
+        <div class="order-error" id="order-error" role="alert"></div>
+
+        <button type="submit" class="btn-primary" id="prepare-wa-btn" data-cursor="button">
+          PREPARE WHATSAPP ORDER
+        </button>
+
+        <div class="order-handoff" id="order-handoff" hidden>
+          <p class="order-handoff-note" id="order-handoff-note">
+            Your order summary is ready. Send the pre-filled message on WhatsApp to submit your order directly to LISSE Concierge.
+          </p>
+          <div class="order-handoff-actions">
+            <a
+              id="wa-launch-link"
+              class="btn-primary wa-launch-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor="button"
+            >
+              SEND VIA WHATSAPP
+            </a>
+            <button type="button" class="btn-secondary" id="copy-order-btn" data-cursor="button">
+              COPY
+            </button>
+          </div>
+        </div>
+      </form>
+    </aside>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="custom-cursor" id="custom-cursor" aria-hidden="true">
+      <div class="cursor-ring">
+        <span class="cursor-dot"></span>
+        <span class="cursor-label" id="cursor-label">
+          <span>OPEN</span>
+          <span>DÉCOUVRIR</span>
+        </span>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        "use strict";
+
+        // ================================================================
+        // 1. CENTRAL CONFIGURATION (EDITABLE)
+        // ================================================================
+        const LISSE_CONFIG = {
+          brand: "LISSE",
+          descriptor: "LUXURY PERFUMES",
+          // Edit this WhatsApp business number (international format, digits only, no '+' or spaces)
+          whatsappNumber: "213550000000",
+          currency: "DZD",
+          collectionYear: "2026"
+        };
+
+        // ================================================================
+        // 2. CENTRAL PERFUME DATA COLLECTION (EDITABLE)
+        // ================================================================
+        const PERFUMES = [
+          {
+            id: "noir-eternel",
+            number: "001",
+            name: "NOIR ÉTERNEL",
+            brand: "LISSE",
+            concentration: "EAU DE PARFUM",
+            category: "WOODY ORIENTAL",
+            filterGroups: ["woody", "oriental"],
+            gender: "UNISEX",
+            volume: "100 ML",
+            priceDZD: 24500,
+            originalPriceDZD: 27000,
+            notesTop: ["BERGAMOT", "BLACK PEPPER"],
+            notesHeart: ["AMBER", "CEDARWOOD"],
+            notesBase: ["OUD", "MUSK"],
+            description: {
+              en: "Deep, mysterious, and architectural. Noir Éternel opens with crisp Calabrian bergamot and cracked black pepper before settling into a smoldering heart of resinous amber, dry cedarwood, and velvety oud.",
+              fr: "Profond, mystérieux et architectural. Noir Éternel s'ouvre sur une bergamote vive et un poivre noir concassé, avant de révéler un cœur fumé d'ambre, de cèdre et d'oud velouté.",
+              ar: "عميق وغامض بأسلوب معماري فاخر. يفتتح بنفحات البرغموت والفلفل الأسود قبل أن يستقر في قلب دافئ من العنبر وخشب الأرز والعود المخملي."
+            },
+            image: "/perfumes/noir-eternel.webp",
+            year: 2026,
+            collection: "SIGNATURE PRIVÉE",
+            availability: "AVAILABLE",
+            bottleStyle: {
+              aspect: 0.56,
+              depthRatio: 0.54,
+              glassBg: "linear-gradient(135deg, #1b191b 0%, #2f2b2e 45%, #121012 100%)",
+              capBg: "linear-gradient(90deg, #62074f 0%, #a50e85 48%, #4b053c 100%)",
+              collarBg: "linear-gradient(90deg, #860c6b, #c53da8, #580646)",
+              labelBg: "#1b1b1c",
+              labelInk: "#e5e5e5"
+            }
+          },
+          {
+            id: "rose-imperiale",
+            number: "002",
+            name: "ROSE IMPÉRIALE",
+            brand: "LISSE",
+            concentration: "EAU DE PARFUM",
+            category: "FLORAL",
+            filterGroups: ["floral"],
+            gender: "FEMININE",
+            volume: "100 ML",
+            priceDZD: 21000,
+            originalPriceDZD: 23500,
+            notesTop: ["PINK PEPPER", "RASPBERRY"],
+            notesHeart: ["BULGARIAN ROSE", "PEONY"],
+            notesBase: ["VANILLA", "WHITE MUSK"],
+            description: {
+              en: "Romantic and luminous. Bulgarian rose petals harvested at dawn meet sparkling raspberry and pink pepper, resting effortlessly on spun vanilla and clean white musk.",
+              fr: "Romantique et sophistiquée. Les pétales de rose bulgare cueillis à l'aube rencontrent la framboise et le poivre rose sur un fond de vanille et de musc blanc.",
+              ar: "رومانسي ومشرق. بتلات الورد البلغاري المقطوفة عند الفجر تمتزج مع التوت والفلفل الوردي فوق قاعدة ناعمة من الفانيليا والمسك الأبيض."
+            },
+            image: "/perfumes/rose-imperiale.webp",
+            year: 2026,
+            collection: "SIGNATURE PRIVÉE",
+            availability: "AVAILABLE",
+            bottleStyle: {
+              aspect: 0.53,
+              depthRatio: 0.50,
+              glassBg: "linear-gradient(135deg, #f3d2cc 0%, #e7b5ad 50%, #d4968d 100%)",
+              capBg: "linear-gradient(90deg, #ebd2d6 0%, #f7e6e9 55%, #d6b6bc 100%)",
+              collarBg: "linear-gradient(90deg, #b89448, #eed68e, #9b7a35)",
+              labelBg: "#f6f2ec",
+              labelInk: "#5e4624"
+            }
+          },
+          {
+            id: "oud-royal",
+            number: "003",
+            name: "OUD ROYAL",
+            brand: "LISSE",
+            concentration: "EXTRAIT DE PARFUM",
+            category: "ORIENTAL",
+            filterGroups: ["oriental"],
+            gender: "UNISEX",
+            volume: "100 ML",
+            priceDZD: 29000,
+            originalPriceDZD: 32000,
+            notesTop: ["SAFFRON", "CARDAMOM"],
+            notesHeart: ["OUD", "ROSE"],
+            notesBase: ["AMBER", "SANDALWOOD"],
+            description: {
+              en: "Powerful, sovereign, and unapologetically opulent. Crimson saffron threads and green cardamom ignite a dense core of aged agarwood, damask rose, and creamy sandalwood.",
+              fr: "Puissant et majestueux. Le safran et la cardamome embrasent un cœur noble de bois d'oud et de rose, prolongé par l'ambre doré et le santal crémeux.",
+              ar: "فخامة ملكية وقوة آسرة. خيوط الزعفران والهيل تشعل قلباً غنياً من العود المعتق والورد الدمشقي على قاعدة من العنبر وخشب الصندل."
+            },
+            image: "/perfumes/oud-royal.webp",
+            year: 2026,
+            collection: "HAUTE PARFUMERIE",
+            availability: "AVAILABLE",
+            bottleStyle: {
+              aspect: 0.52,
+              depthRatio: 0.56,
+              glassBg: "linear-gradient(135deg, #3c180c 0%, #5c2712 48%, #280f07 100%)",
+              capBg: "linear-gradient(90deg, #b68a2e 0%, #f0cf7b 45%, #8a641b 100%)",
+              collarBg: "linear-gradient(90deg, #a87d26, #ebd084, #7e5a16)",
+              labelBg: "#d8bd77",
+              labelInk: "#1d1409"
+            }
+          },
+          {
+            id: "blanc-absolu",
+            number: "004",
+            name: "BLANC ABSOLU",
+            brand: "LISSE",
+            concentration: "EAU DE PARFUM",
+            category: "FRESH WOODY",
+            filterGroups: ["fresh", "woody"],
+            gender: "UNISEX",
+            volume: "100 ML",
+            priceDZD: 19500,
+            originalPriceDZD: 21500,
+            notesTop: ["BERGAMOT", "LEMON"],
+            notesHeart: ["NEROLI", "JASMINE"],
+            notesBase: ["WHITE MUSK", "VETIVER"],
+            description: {
+              en: "Clean, minimal, and timeless. Sunlit Sicilian lemon and bitter neroli unfold across crisp white petals and dry Haitian vetiver—pure architectural silence in glass.",
+              fr: "Pur, minimal et intemporel. Le citron et la bergamote s'épanouissent sur le néroli lumineux, le jasmin blanc et le vétiver sec.",
+              ar: "نقي وبسيط وخالد. انتعاش الليمون والبرغموت ينفتح على زهر النيرولي والياسمين الأبيض مع لمسة هادئة من نجيل الهند والمسك."
+            },
+            image: "/perfumes/blanc-absolu.webp",
+            year: 2026,
+            collection: "ATELIER BLANC",
+            availability: "AVAILABLE",
+            bottleStyle: {
+              aspect: 0.43,
+              depthRatio: 0.52,
+              glassBg: "linear-gradient(135deg, #e7e7e5 0%, #d4d5d2 50%, #b7b8b5 100%)",
+              capBg: "linear-gradient(90deg, #e5e3dc 0%, #f3f1eb 50%, #cbc8bf 100%)",
+              collarBg: "linear-gradient(90deg, #7c7e80, #c9cbcd, #595b5d)",
+              labelBg: "#e9e9e7",
+              labelInk: "#3f4042"
+            }
+          },
+          {
+            id: "velvet-bloom",
+            number: "005",
+            name: "VELVET BLOOM",
+            brand: "LISSE",
+            concentration: "EAU DE PARFUM",
+            category: "FLORAL ORIENTAL",
+            filterGroups: ["floral", "oriental"],
+            gender: "FEMININE",
+            volume: "80 ML",
+            priceDZD: 22500,
+            originalPriceDZD: 25000,
+            notesTop: ["PEAR", "MANDARIN"],
+            notesHeart: ["JASMINE", "TUBEROSE"],
+            notesBase: ["VANILLA", "CASHMERE WOOD"],
+            description: {
+              en: "Sensual and tactile like crushed burgundy silk. Juicy orchard pear and mandarin veil an intoxicating nocturnal bouquet of sambac jasmine, tuberose, and cashmere wood.",
+              fr: "Sensuelle et douce. La poire et la mandarine enveloppent un bouquet nocturne de jasmin et de tubéreuse posé sur le bois de cachemire et la vanille.",
+              ar: "حسي وناعم كالمخمل. الكمثرى واليوسفي يحيطان بباقة مسائية آسرة من الياسمين ومسك الروم مع الفانيليا وخشب الكشمير."
+            },
+            image: "/perfumes/velvet-bloom.webp",
+            year: 2026,
+            collection: "SIGNATURE PRIVÉE",
+            availability: "AVAILABLE",
+            bottleStyle: {
+              aspect: 0.55,
+              depthRatio: 0.54,
+              glassBg: "linear-gradient(135deg, #420718 0%, #640c27 46%, #2a040f 100%)",
+              capBg: "linear-gradient(90deg, #350615 0%, #550f24 52%, #23030c 100%)",
+              collarBg: "linear-gradient(90deg, #1b1b1d, #48484c, #111112)",
+              labelBg: "#f2ece1",
+              labelInk: "#574325"
+            }
+          },
+          {
+            id: "ambre-nocturne",
+            number: "006",
+            name: "AMBRE NOCTURNE",
+            brand: "LISSE",
+            concentration: "EAU DE PARFUM",
+            category: "AMBER",
+            filterGroups: ["oriental"],
+            gender: "UNISEX",
+            volume: "100 ML",
+            priceDZD: 26000,
+            originalPriceDZD: 28500,
+            notesTop: ["CINNAMON", "BERGAMOT"],
+            notesHeart: ["AMBER", "LABDANUM"],
+            notesBase: ["BENZOIN", "TONKA BEAN"],
+            description: {
+              en: "Warm, resinous, and enveloping after dusk. Spiced Ceylon cinnamon warms golden labdanum and molten ambergris over roasted tonka bean and sweet benzoin tears.",
+              fr: "Chaud et intense. La cannelle épicée révèle un ambre profond et du labdanum doré, adoucis par le benjoin et la fève tonka.",
+              ar: "دافئ وكثيف بعد الغروب. القرفة المتبلة تكشف عن العنبر العميق واللابدانوم الذهبي مع حلاوة الجاوي وحبوب التونكا."
+            },
+            image: "/perfumes/ambre-nocturne.webp",
+            year: 2026,
+            collection: "NOCTURNE",
+            availability: "AVAILABLE",
+            bottleStyle: {
+              aspect: 0.56,
+              depthRatio: 0.55,
+              glassBg: "linear-gradient(135deg, #4f2509 0%, #7d3e11 48%, #2e1504 100%)",
+              capBg: "linear-gradient(90deg, #2d231b 0%, #4d3d30 50%, #1d1610 100%)",
+              collarBg: "linear-gradient(90deg, #3d220f, #7a4923, #241207)",
+              labelBg: "#25201c",
+              labelInk: "#d7c39d"
+            }
+          },
+          {
+            id: "musc-blanc",
+            number: "007",
+            name: "MUSC BLANC",
+            brand: "LISSE",
+            concentration: "EAU DE PARFUM",
+            category: "MUSK",
+            filterGroups: ["fresh"],
+            gender: "UNISEX",
+            volume: "100 ML",
+            priceDZD: 17500,
+            originalPriceDZD: 19000,
+            notesTop: ["ALDEHYDES", "WHITE FLOWERS"],
+            notesHeart: ["COTTON FLOWER", "IRIS"],
+            notesBase: ["WHITE MUSK", "SANDALWOOD"],
+            description: {
+              en: "Soft, intimate, and weightless like freshly pressed linen. Airy aldehydes and powdery Florentine iris melt into cotton blossom and skin-hugging white musk.",
+              fr: "Doux et aérien comme un linge frais. Les aldéhydes et l'iris poudré caressent la fleur de coton et le musc blanc velouté.",
+              ar: "ناعم ونقي كالكتان الأبيض. الألدهيدات المشرقة والسوسن البودري يذوبان في زهر القطن والمسك الأبيض اللطيف."
+            },
+            image: "/perfumes/musc-blanc.webp",
+            year: 2026,
+            collection: "ATELIER BLANC",
+            availability: "AVAILABLE",
+            bottleStyle: {
+              aspect: 0.53,
+              depthRatio: 0.52,
+              glassBg: "linear-gradient(135deg, #dedcd5 0%, #cbc8be 48%, #a6a39a 100%)",
+              capBg: "linear-gradient(90deg, #efefef 0%, #ffffff 50%, #d4d4d4 100%)",
+              collarBg: "linear-gradient(90deg, #8b8d90, #d8dadc, #5c5e60)",
+              labelBg: "#f5f5f3",
+              labelInk: "#1d1d1d"
+            }
+          },
+          {
+            id: "rouge-intense",
+            number: "008",
+            name: "ROUGE INTENSE",
+            brand: "LISSE",
+            concentration: "EAU DE PARFUM",
+            category: "ORIENTAL SPICY",
+            filterGroups: ["oriental"],
+            gender: "UNISEX",
+            volume: "90 ML",
+            priceDZD: 23000,
+            originalPriceDZD: 25500,
+            notesTop: ["PINK PEPPER", "SAFFRON"],
+            notesHeart: ["ROSE", "PATCHOULI"],
+            notesBase: ["AMBER", "VANILLA"],
+            description: {
+              en: "Bold, magnetic, and expressive. Electric pink pepper and saffron lacquer a velvety heart of crimson rose and dark Indonesian patchouli over glowing amber.",
+              fr: "Audacieux et expressif. Le poivre rose et le safran électrisent une rose rouge profonde et un patchouli sombre sur fond d'ambre et de vanille.",
+              ar: "جريء ومعبر بحضور لافت. الفلفل الوردي والزعفران يضيئان قلباً من الورد القرمزي والباتشولي الداكن فوق العنبر والفانيليا."
+            },
+            image: "/perfumes/rouge-intense.webp",
+            year: 2026,
+            collection: "EDITION MAGENTA",
+            availability: "AVAILABLE",
+            bottleStyle: {
+              aspect: 0.54,
+              depthRatio: 0.52,
+              glassBg: "linear-gradient(135deg, #6e0342 0%, #a50e85 48%, #4b022d 100%)",
+              capBg: "linear-gradient(90deg, #111111 0%, #2f2f32 50%, #070707 100%)",
+              collarBg: "linear-gradient(90deg, #b89132, #eed07e, #86661f)",
+              labelBg: "#efe9d6",
+              labelInk: "#141414"
+            }
+          },
+          {
+            id: "cedre-noir",
+            number: "009",
+            name: "CEDRE NOIR",
+            brand: "LISSE",
+            concentration: "EAU DE PARFUM",
+            category: "WOODY",
+            filterGroups: ["woody"],
+            gender: "MASCULINE",
+            volume: "100 ML",
+            priceDZD: 20500,
+            originalPriceDZD: 22500,
+            notesTop: ["GRAPEFRUIT", "BLACK PEPPER"],
+            notesHeart: ["CEDARWOOD", "CYPRESS"],
+            notesBase: ["VETIVER", "MUSK"],
+            description: {
+              en: "Refined, sculpted, and tailored. Bitter grapefruit rind and cracked pepper cut through monolithic Atlas cedarwood, evergreen cypress, and smoky vetiver.",
+              fr: "Raffiné et structuré. Le pamplemousse amer et le poivre noir soulignent un cèdre de l'Atlas majestueux, le cyprès vert et le vétiver fumé.",
+              ar: "مصقول ومهيب. الجريب فروت المر والفلفل الأسود يبرزان فخامة خشب الأرز الأطلسي والسرو الأخضر ونجيل الهند."
+            },
+            image: "/perfumes/cedre-noir.webp",
+            year: 2026,
+            collection: "NOCTURNE",
+            availability: "AVAILABLE",
+            bottleStyle: {
+              aspect: 0.62,
+              depthRatio: 0.54,
+              glassBg: "linear-gradient(135deg, #2b2d30 0%, #44474b 48%, #1d1e20 100%)",
+              capBg: "linear-gradient(90deg, #161618 0%, #2c2d30 50%, #0d0d0e 100%)",
+              collarBg: "linear-gradient(90deg, #3c3e42, #7a7d82, #252629)",
+              labelBg: "#2e343b",
+              labelInk: "#b8bec4"
+            }
+          },
+          {
+            id: "soleil-dor",
+            number: "010",
+            name: "SOLEIL D'OR",
+            brand: "LISSE",
+            concentration: "EAU DE PARFUM",
+            category: "CITRUS FLORAL",
+            filterGroups: ["fresh", "floral"],
+            gender: "UNISEX",
+            volume: "100 ML",
+            priceDZD: 25000,
+            originalPriceDZD: 27500,
+            notesTop: ["MANDARIN", "NEROLI"],
+            notesHeart: ["ORANGE BLOSSOM", "JASMINE"],
+            notesBase: ["AMBER", "MUSK"],
+            description: {
+              en: "Bright, radiant, and Mediterranean. Golden mandarin zest and Mediterranean orange blossom shimmer over sunlit white jasmine, warm amber, and sheer skin musk.",
+              fr: "Lumineux et radieux. La mandarine dorée et le néroli illuminent la fleur d'oranger et le jasmin, réchauffés d'ambre solaire.",
+              ar: "مشرق ومتألق كشمس المتوسط. اليوسفي الذهبي وزهر النيرولي يضيئان زهر البرتقال والياسمين فوق قاعدة دافئة من العنبر."
+            },
+            image: "/perfumes/soleil-dor.webp",
+            year: 2026,
+            collection: "EDITION SOLAIRE",
+            availability: "AVAILABLE",
+            bottleStyle: {
+              aspect: 0.50,
+              depthRatio: 0.52,
+              glassBg: "linear-gradient(135deg, #f2d590 0%, #e1b554 48%, #c99430 100%)",
+              capBg: "linear-gradient(90deg, #dda94b 0%, #f7d88c 50%, #b5822a 100%)",
+              collarBg: "linear-gradient(90deg, #b6872d, #f1d484, #8d6419)",
+              labelBg: "#f5f1e6",
+              labelInk: "#1d1912"
+            }
+          }
+        ];
+
+        const ALGERIA_WILAYAS = [
+          "01 - Adrar", "02 - Chlef", "03 - Laghouat", "04 - Oum El Bouaghi", "05 - Batna",
+          "06 - Béjaïa", "07 - Biskra", "08 - Béchar", "09 - Blida", "10 - Bouira",
+          "11 - Tamanrasset", "12 - Tébessa", "13 - Tlemcen", "14 - Tiaret", "15 - Tizi Ouzou",
+          "16 - Alger", "17 - Djelfa", "18 - Jijel", "19 - Sétif", "20 - Saïda",
+          "21 - Skikda", "22 - Sidi Bel Abbès", "23 - Annaba", "24 - Guelma", "25 - Constantine",
+          "26 - Médéa", "27 - Mostaganem", "28 - M'Sila", "29 - Mascara", "30 - Ouargla",
+          "31 - Oran", "32 - El Bayadh", "33 - Illizi", "34 - Bordj Bou Arréridj", "35 - Boumerdès",
+          "36 - El Tarf", "37 - Tindouf", "38 - Tissemsilt", "39 - El Oued", "40 - Khenchela",
+          "41 - Souk Ahras", "42 - Tipaza", "43 - Mila", "44 - Aïn Defla", "45 - Naâma",
+          "46 - Aïn Témouchent", "47 - Ghardaïa", "48 - Relizane", "49 - Timimoun", "50 - Bordj Badji Mokhtar",
+          "51 - Ouled Djellal", "52 - Béni Abbès", "53 - In Salah", "54 - In Guezzam", "55 - Touggourt",
+          "56 - Djanet", "57 - El M'Ghair", "58 - El Meniaa"
+        ];
+
+        const I18N = {
+          en: {
+            back: "BACK / RETOUR",
+            collectionTag: "COLLECTION 2026",
+            tabs: { all: "ALL", floral: "FLORAL", woody: "WOODY", oriental: "ORIENTAL", fresh: "FRESH" },
+            openLines: ["OPEN", "DÉCOUVRIR"],
+            topNotes: "TOP NOTES",
+            heartNotes: "HEART NOTES",
+            baseNotes: "BASE NOTES",
+            available: "AVAILABLE",
+            outOfStock: "OUT OF STOCK",
+            orderNow: "ORDER NOW / COMMANDER",
+            backToCollection: "BACK TO COLLECTION",
+            collectionPrefix: "LISSE COLLECTION / NO.",
+            captionPrefix: "COLLECTION",
+            orderHeading: "Order Reservation",
+            close: "CLOSE",
+            fullName: "Full Name",
+            phone: "Phone Number",
+            wilaya: "Wilaya",
+            commune: "Commune",
+            address: "Delivery Address",
+            notes: "Order Notes (Optional)",
+            unitPrice: "Unit Price",
+            quantity: "Quantity",
+            total: "Total",
+            prepareWa: "PREPARE WHATSAPP ORDER",
+            handoffNote: "Your order summary is ready. Send the pre-filled message on WhatsApp to submit your order directly to LISSE Concierge.",
+            sendWa: "SEND VIA WHATSAPP",
+            copy: "COPY",
+            copied: "COPIED",
+            validationError: "Please complete your full name, phone number, wilaya, commune, and delivery address."
+          },
+          fr: {
+            back: "RETOUR",
+            collectionTag: "COLLECTION 2026",
+            tabs: { all: "TOUS", floral: "FLORAL", woody: "BOISÉ", oriental: "ORIENTAL", fresh: "FRAIS" },
+            openLines: ["OUVRIR", "DÉCOUVRIR"],
+            topNotes: "NOTES DE TÊTE",
+            heartNotes: "NOTES DE CŒUR",
+            baseNotes: "NOTES DE FOND",
+            available: "DISPONIBLE",
+            outOfStock: "RUPTURE",
+            orderNow: "COMMANDER",
+            backToCollection: "RETOUR À LA COLLECTION",
+            collectionPrefix: "COLLECTION LISSE / N°",
+            captionPrefix: "COLLECTION",
+            orderHeading: "Réservation",
+            close: "FERMER",
+            fullName: "Nom complet",
+            phone: "Téléphone",
+            wilaya: "Wilaya",
+            commune: "Commune",
+            address: "Adresse de livraison",
+            notes: "Notes (Optionnel)",
+            unitPrice: "Prix unitaire",
+            quantity: "Quantité",
+            total: "Total",
+            prepareWa: "PRÉPARER LA COMMANDE WHATSAPP",
+            handoffNote: "Votre récapitulatif est prêt. Envoyez le message pré-rempli sur WhatsApp pour transmettre votre commande à la conciergerie LISSE.",
+            sendWa: "ENVOYER SUR WHATSAPP",
+            copy: "COPIER",
+            copied: "COPIÉ",
+            validationError: "Veuillez renseigner votre nom, téléphone, wilaya, commune et adresse de livraison."
+          },
+          ar: {
+            back: "رجوع",
+            collectionTag: "مجموعة 2026",
+            tabs: { all: "الكل", floral: "زهري", woody: "خشبي", oriental: "شرقي", fresh: "منعش" },
+            openLines: ["اكتشف", "عرض"],
+            topNotes: "مقدمة العطر",
+            heartNotes: "قلب العطر",
+            baseNotes: "قاعدة العطر",
+            available: "متوفر",
+            outOfStock: "غير متوفر",
+            orderNow: "اطلب الآن",
+            backToCollection: "العودة إلى المجموعة",
+            collectionPrefix: "مجموعة LISSE / رقم ",
+            captionPrefix: "مجموعة",
+            orderHeading: "حجز الطلب",
+            close: "إغلاق",
+            fullName: "الاسم الكامل",
+            phone: "رقم الهاتف",
+            wilaya: "الولاية",
+            commune: "البلدية",
+            address: "عنوان التوصيل",
+            notes: "ملاحظات الطلب (اختياري)",
+            unitPrice: "سعر الوحدة",
+            quantity: "الكمية",
+            total: "المجموع",
+            prepareWa: "تجهيز طلب واتساب",
+            handoffNote: "ملخص طلبك جاهز. أرسل الرسالة عبر واتساب لإتمام طلبك مع خدمة عملاء LISSE.",
+            sendWa: "إرسال عبر واتساب",
+            copy: "نسخ",
+            copied: "تم النسخ",
+            validationError: "يرجى إدخال الاسم الكامل ورقم الهاتف والولاية والبلدية وعنوان التوصيل."
+          }
+        };
+
+        // ================================================================
+        // 3. STATE & CACHED DOM REFERENCES
+        // ================================================================
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const isTouchDevice = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+
+        const state = {
+          lang: "en",
+          filter: "all",
+          filtered: [...PERFUMES],
+          copies: 3,
+          midCopy: 1,
+          // Continuous shelf state
+          s: 0,
+          T: 0,
+          active: 0,
+          hoverIndex: -1,
+          // Pointer & cursor state
+          mx: window.innerWidth * 0.5,
+          my: window.innerHeight * 0.5,
+          cx: window.innerWidth * 0.5,
+          cy: window.innerHeight * 0.5,
+          tiltX: 0,
+          tiltY: 0,
+          // Interaction flags
+          isOpen: false,
+          isOrderOpen: false,
+          isDragging: false,
+          dragMoved: false,
+          pointerDown: false,
+          dragStartX: 0,
+          dragStartY: 0,
+          dragStartT: 0,
+          dragLastMoveTime: 0,
+          dragVelocity: 0,
+          wheelTimer: null,
+          // Layout metrics (updated via ResizeObserver, NEVER inside RAF)
+          bottleH: 360,
+          vpWidth: window.innerWidth,
+          vpHeight: window.innerHeight,
+          // Ink reveal RAF state
+          inkActive: false,
+          inkStartTime: 0,
+          inkDuration: 1150,
+          // Active WAAPI references for clean cancellation
+          sheetAnim: null,
+          orderAnim: null,
+          orderBackdropAnim: null,
+          tabAnim: null,
+          captionAnims: [],
+          detailTextAnims: [],
+          // Order state
+          orderQty: 1,
+          lastFocusEl: null,
+          // Preloaded image metadata
+          imageDimensions: new Map()
+        };
+
+        const DOM = {
+          headerBackBtn: document.getElementById("header-back-btn"),
+          brandHomeLink: document.getElementById("brand-home-link"),
+          collectionYearLabel: document.getElementById("collection-year-label"),
+          langButtons: Array.from(document.querySelectorAll(".lang-btn")),
+          categoryNav: document.getElementById("category-tabs"),
+          categoryIndicator: document.getElementById("category-indicator"),
+          categoryTabs: Array.from(document.querySelectorAll(".category-tab")),
+          shelfViewport: document.getElementById("shelf-viewport"),
+          shelfTrack: document.getElementById("shelf-track"),
+          playIndicator: document.getElementById("play-indicator"),
+          prevBtn: document.getElementById("prev-btn"),
+          nextBtn: document.getElementById("next-btn"),
+          captionTitle: document.getElementById("caption-title"),
+          captionMeta: document.getElementById("caption-meta"),
+          captionSub: document.getElementById("caption-sub"),
+          footerContactBtn: document.getElementById("footer-contact-btn"),
+          customCursor: document.getElementById("custom-cursor"),
+          cursorLabel: document.getElementById("cursor-label"),
+          // Detail sheet
+          detailSheet: document.getElementById("detail-sheet"),
+          detailGrid: document.getElementById("detail-grid"),
+          detailCloseTop: document.getElementById("detail-close-top"),
+          detailTopbarCode: document.getElementById("detail-topbar-code"),
+          detailSubtitle: document.getElementById("detail-subtitle"),
+          detailTitle: document.getElementById("detail-title"),
+          detailMetadata: document.getElementById("detail-metadata"),
+          detailDescription: document.getElementById("detail-description"),
+          labelTopNotes: document.getElementById("label-top-notes"),
+          labelHeartNotes: document.getElementById("label-heart-notes"),
+          labelBaseNotes: document.getElementById("label-base-notes"),
+          detailNotesTop: document.getElementById("detail-notes-top"),
+          detailNotesHeart: document.getElementById("detail-notes-heart"),
+          detailNotesBase: document.getElementById("detail-notes-base"),
+          detailPrice: document.getElementById("detail-price"),
+          detailAvailability: document.getElementById("detail-availability"),
+          detailOrderBtn: document.getElementById("detail-order-btn"),
+          detailBackBtn: document.getElementById("detail-back-btn"),
+          detailPosterImg: document.getElementById("detail-poster-img"),
+          inkDots: Array.from(document.querySelectorAll(".ink-dot")),
+          // Order drawer
+          orderBackdrop: document.getElementById("order-backdrop"),
+          orderPanel: document.getElementById("order-panel"),
+          orderHeading: document.getElementById("order-heading"),
+          orderCloseBtn: document.getElementById("order-close-btn"),
+          orderThumb: document.getElementById("order-thumb"),
+          orderProdName: document.getElementById("order-prod-name"),
+          orderProdMeta: document.getElementById("order-prod-meta"),
+          qtyDec: document.getElementById("qty-dec"),
+          qtyInc: document.getElementById("qty-inc"),
+          qtyVal: document.getElementById("qty-val"),
+          orderForm: document.getElementById("order-form"),
+          custName: document.getElementById("cust-name"),
+          custPhone: document.getElementById("cust-phone"),
+          custWilaya: document.getElementById("cust-wilaya"),
+          custCommune: document.getElementById("cust-commune"),
+          custAddress: document.getElementById("cust-address"),
+          custNotes: document.getElementById("cust-notes"),
+          lblName: document.getElementById("lbl-name"),
+          lblPhone: document.getElementById("lbl-phone"),
+          lblWilaya: document.getElementById("lbl-wilaya"),
+          lblCommune: document.getElementById("lbl-commune"),
+          lblAddress: document.getElementById("lbl-address"),
+          lblNotes: document.getElementById("lbl-notes"),
+          lblUnitPrice: document.getElementById("lbl-unit-price"),
+          lblQtySummary: document.getElementById("lbl-qty-summary"),
+          lblTotal: document.getElementById("lbl-total"),
+          orderUnitPrice: document.getElementById("order-unit-price"),
+          orderQtySummary: document.getElementById("order-qty-summary"),
+          orderTotalPrice: document.getElementById("order-total-price"),
+          orderError: document.getElementById("order-error"),
+          prepareWaBtn: document.getElementById("prepare-wa-btn"),
+          orderHandoff: document.getElementById("order-handoff"),
+          orderHandoffNote: document.getElementById("order-handoff-note"),
+          waLaunchLink: document.getElementById("wa-launch-link"),
+          copyOrderBtn: document.getElementById("copy-order-btn")
+        };
+
+        // Cached shelf bottle DOM node structures
+        let shelfItems = [];
+
+        // ================================================================
+        // 4. UTILITIES
+        // ================================================================
+        function formatDZD(amount) {
+          const formatted = Math.round(amount)
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+          return `${formatted} ${LISSE_CONFIG.currency}`;
+        }
+
+        function clamp(v, min, max) {
+          return v < min ? min : v > max ? max : v;
+        }
+
+        function smoothstep(edge0, edge1, x) {
+          const t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
+          return t * t * (3 - 2 * t);
+        }
+
+        function easeOutCubic(t) {
+          const inv = 1 - clamp(t, 0, 1);
+          return 1 - inv * inv * inv;
+        }
+
+        function mod(n, m) {
+          return ((n % m) + m) % m;
+        }
+
+        function getActivePerfume() {
+          return state.filtered[state.active] || state.filtered[0] || PERFUMES[0];
+        }
+
+        // ================================================================
+        // 5. ASSET PRELOADER
+        // ================================================================
+        function preloadPerfumeImages() {
+          const tasks = PERFUMES.map(
+            (p) =>
+              new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                  const ratio = img.naturalWidth && img.naturalHeight ? img.naturalWidth / img.naturalHeight : p.bottleStyle.aspect;
+                  state.imageDimensions.set(p.id, ratio);
+                  resolve();
+                };
+                img.onerror = () => {
+                  state.imageDimensions.set(p.id, p.bottleStyle.aspect);
+                  resolve();
+                };
+                img.src = p.image;
+              })
+          );
+          return Promise.all(tasks);
+        }
+
+        // ================================================================
+        // 6. SHELF GEOMETRY & 3-COPY BUILDER
+        // ================================================================
+        function computeBottleHeight() {
+          const w = window.innerWidth;
+          const h = window.innerHeight;
+          state.vpWidth = w;
+          state.vpHeight = h;
+          if (w <= 768) {
+            state.bottleH = Math.min(w * 0.60, h * 0.40);
+          } else {
+            state.bottleH = Math.min(h * 0.46, w * 0.31);
+          }
+        }
+
+        function buildShelfDOM() {
+          const N = state.filtered.length;
+          // At least 3 copies; if a filtered category is small, add extra odd copies to span wide displays seamlessly
+          state.copies = N <= 3 ? 5 : 3;
+          state.midCopy = Math.floor(state.copies / 2);
+
+          DOM.shelfTrack.innerHTML = "";
+          shelfItems = [];
+
+          for (let copy = 0; copy < state.copies; copy++) {
+            for (let i = 0; i < N; i++) {
+              const perfume = state.filtered[i];
+              const virtualIndex = copy * N + i;
+              const aspect = state.imageDimensions.get(perfume.id) || perfume.bottleStyle.aspect;
+              const widthPx = state.bottleH * aspect;
+              const depthPx = widthPx * perfume.bottleStyle.depthRatio;
+
+              const itemEl = document.createElement("div");
+              itemEl.className = "bottle-item";
+              itemEl.setAttribute("role", "button");
+              itemEl.setAttribute("tabindex", copy === state.midCopy && i === state.active ? "0" : "-1");
+              itemEl.setAttribute("aria-label", `${perfume.name} — ${formatDZD(perfume.priceDZD)}`);
+              itemEl.dataset.virtualIndex = String(virtualIndex);
+              itemEl.dataset.itemIndex = String(i);
+
+              const shadowEl = document.createElement("div");
+              shadowEl.className = "bottle-shadow";
+
+              const prismEl = document.createElement("div");
+              prismEl.className = "bottle-prism";
+
+              // Front face (Photorealistic transparent WebP)
+              const frontFace = document.createElement("div");
+              frontFace.className = "bottle-face-front";
+              frontFace.style.transform = `translateZ(${(depthPx * 0.5).toFixed(2)}px)`;
+
+              const imgEl = document.createElement("img");
+              imgEl.src = perfume.image;
+              imgEl.alt = `${perfume.name} ${perfume.concentration}`;
+              imgEl.decoding = "async";
+              imgEl.draggable = false;
+              frontFace.appendChild(imgEl);
+
+              // Right 3D profile face
+              function createSideProfileFace(sideClass, transformStr) {
+                const face = document.createElement("div");
+                face.className = sideClass;
+                face.style.width = `${depthPx.toFixed(2)}px`;
+                face.style.transform = transformStr;
+
+                const sCap = document.createElement("div");
+                sCap.className = "side-cap";
+                sCap.style.background = perfume.bottleStyle.capBg;
+
+                const sCollar = document.createElement("div");
+                sCollar.className = "side-collar";
+                sCollar.style.background = perfume.bottleStyle.collarBg;
+
+                const sBody = document.createElement("div");
+                sBody.className = "side-body";
+                sBody.style.background = perfume.bottleStyle.glassBg;
+
+                const sLabel = document.createElement("div");
+                sLabel.className = "side-label-strip";
+                sLabel.style.backgroundColor = perfume.bottleStyle.labelBg;
+                sLabel.style.color = perfume.bottleStyle.labelInk;
+                sLabel.textContent = perfume.name;
+
+                sBody.appendChild(sLabel);
+                face.appendChild(sCap);
+                face.appendChild(sCollar);
+                face.appendChild(sBody);
+                return face;
+              }
+
+              const sideFace = createSideProfileFace(
+                "bottle-face-side",
+                `translateZ(${(depthPx * 0.5).toFixed(2)}px) rotateY(-90deg)`
+              );
+              const leftFace = createSideProfileFace(
+                "bottle-face-side",
+                `translateZ(${(depthPx * 0.5).toFixed(2)}px) rotateY(90deg)`
+              );
+              leftFace.style.right = "auto";
+              leftFace.style.left = "0";
+              leftFace.style.transformOrigin = "left center";
+
+              prismEl.appendChild(sideFace);
+              prismEl.appendChild(leftFace);
+              prismEl.appendChild(frontFace);
+
+              itemEl.appendChild(shadowEl);
+              itemEl.appendChild(prismEl);
+              DOM.shelfTrack.appendChild(itemEl);
+
+              shelfItems.push({
+                virtualIndex,
+                itemIndex: i,
+                perfume,
+                aspect,
+                widthPx,
+                depthPx,
+                el: itemEl,
+                prismEl,
+                shadowEl,
+                imgEl,
+                sideFace,
+                leftFace,
+                frontFace
+              });
+            }
+          }
+
+          updateShelfDimensions();
+        }
+
+        function updateShelfDimensions() {
+          const H = state.bottleH;
+          for (let i = 0; i < shelfItems.length; i++) {
+            const item = shelfItems[i];
+            const W = H * item.aspect;
+            const D = W * item.perfume.bottleStyle.depthRatio;
+            item.widthPx = W;
+            item.depthPx = D;
+            item.el.style.width = `${W.toFixed(2)}px`;
+            item.el.style.height = `${H.toFixed(2)}px`;
+            item.el.style.marginLeft = `${(-W * 0.5).toFixed(2)}px`;
+            item.el.style.marginTop = `${(-H * 0.5).toFixed(2)}px`;
+            item.frontFace.style.transform = `translateZ(${(D * 0.5).toFixed(2)}px)`;
+            item.sideFace.style.width = `${D.toFixed(2)}px`;
+            item.sideFace.style.transform = `translateZ(${(D * 0.5).toFixed(2)}px) rotateY(-90deg)`;
+            item.leftFace.style.width = `${D.toFixed(2)}px`;
+            item.leftFace.style.transform = `translateZ(${(D * 0.5).toFixed(2)}px) rotateY(90deg)`;
+          }
+        }
+
+        // ================================================================
+        // 7. CAPTION ANIMATIONS (OVERFLOW MASK + WAAPI, ZERO OPACITY FADE)
+        // ================================================================
+        function animateCaptionLine(el, newHTML) {
+          // Cancel previous animations on this line
+          const parent = el.parentElement;
+          const clones = parent.querySelectorAll(".mask-line-exit");
+          clones.forEach((c) => c.remove());
+
+          if (prefersReducedMotion.matches) {
+            el.innerHTML = newHTML;
+            el.style.transform = "translateY(0%)";
+            return;
+          }
+
+          // Clone exiting line to slide upward while new line enters from below
+          const exitClone = el.cloneNode(true);
+          exitClone.classList.add("mask-line-exit");
+          exitClone.style.position = "absolute";
+          exitClone.style.left = "0";
+          exitClone.style.right = "0";
+          exitClone.style.top = "0";
+          parent.appendChild(exitClone);
+
+          el.innerHTML = newHTML;
+
+          const exitAnim = exitClone.animate(
+            [{ transform: "translateY(0%)" }, { transform: "translateY(-115%)" }],
+            { duration: 650, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }
+          );
+          exitAnim.onfinish = () => exitClone.remove();
+
+          const enterAnim = el.animate(
+            [{ transform: "translateY(115%)" }, { transform: "translateY(0%)" }],
+            { duration: 650, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }
+          );
+          state.captionAnims.push(exitAnim, enterAnim);
+        }
+
+        function updateCaption(animate = true) {
+          const p = getActivePerfume();
+          const t = I18N[state.lang];
+          const titleHTML = p.name;
+          const metaHTML = `<span class="accent-cat">${p.category}</span> / ${p.concentration}`;
+          const subHTML = `${p.volume} / ${t.captionPrefix} ${p.number}`;
+
+          if (!animate) {
+            DOM.captionTitle.innerHTML = titleHTML;
+            DOM.captionMeta.innerHTML = metaHTML;
+            DOM.captionSub.innerHTML = subHTML;
+            return;
+          }
+
+          state.captionAnims.forEach((a) => {
+            try { a.cancel(); } catch (_) {}
+          });
+          state.captionAnims = [];
+
+          animateCaptionLine(DOM.captionTitle, titleHTML);
+          animateCaptionLine(DOM.captionMeta, metaHTML);
+          animateCaptionLine(DOM.captionSub, subHTML);
+        }
+
+        // ================================================================
+        // 8. CATEGORY FILTERING & TAB INDICATOR (WAAPI)
+        // ================================================================
+        function positionCategoryIndicator(animate = true) {
+          const activeTab = DOM.categoryTabs.find((b) => b.getAttribute("aria-selected") === "true") || DOM.categoryTabs[0];
+          if (!activeTab) return;
+          const x = activeTab.offsetLeft;
+          const w = activeTab.offsetWidth;
+          const scaleX = w / 40;
+
+          if (state.tabAnim) {
+            try { state.tabAnim.cancel(); } catch (_) {}
+          }
+
+          if (!animate || prefersReducedMotion.matches) {
+            DOM.categoryIndicator.style.transform = `translateX(${x}px) scaleX(${scaleX})`;
+            return;
+          }
+
+          const currentTransform = getComputedStyle(DOM.categoryIndicator).transform;
+          state.tabAnim = DOM.categoryIndicator.animate(
+            [
+              { transform: currentTransform === "none" ? `translateX(${x}px) scaleX(${scaleX})` : currentTransform },
+              { transform: `translateX(${x}px) scaleX(${scaleX})` }
+            ],
+            { duration: 380, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }
+          );
+        }
+
+        function setCategoryFilter(filter) {
+          state.filter = filter;
+          DOM.categoryTabs.forEach((tab) => {
+            tab.setAttribute("aria-selected", tab.dataset.filter === filter ? "true" : "false");
+          });
+          positionCategoryIndicator(true);
+
+          if (filter === "all") {
+            state.filtered = [...PERFUMES];
+          } else {
+            state.filtered = PERFUMES.filter((p) => p.filterGroups.includes(filter));
+          }
+
+          state.active = 0;
+          buildShelfDOM();
+
+          const centerIdx = state.midCopy * state.filtered.length;
+          // Start slightly offset so the first matching perfume smoothly rotates in
+          state.s = prefersReducedMotion.matches ? centerIdx : centerIdx - 0.65;
+          state.T = centerIdx;
+          updateCaption(true);
+        }
+
+        // ================================================================
+        // 9. NAVIGATION & TARGETING
+        // ================================================================
+        function setActiveByDelta(delta) {
+          if (state.isOpen) return;
+          const targetRound = Math.round(state.T) + delta;
+          state.T = targetRound;
+          const N = state.filtered.length;
+          const nextActive = mod(targetRound, N);
+          if (nextActive !== state.active) {
+            state.active = nextActive;
+            updateCaption(true);
+            updateBottleTabIndices();
+          }
+        }
+
+        function snapToNearest() {
+          const targetRound = Math.round(state.T);
+          state.T = targetRound;
+          const N = state.filtered.length;
+          const nextActive = mod(targetRound, N);
+          if (nextActive !== state.active) {
+            state.active = nextActive;
+            updateCaption(true);
+            updateBottleTabIndices();
+          }
+        }
+
+        function updateBottleTabIndices() {
+          const centerVirtual = state.midCopy * state.filtered.length + state.active;
+          for (let i = 0; i < shelfItems.length; i++) {
+            const item = shelfItems[i];
+            item.el.setAttribute("tabindex", item.virtualIndex === centerVirtual ? "0" : "-1");
+          }
+        }
+
+        function getActiveBottleElement() {
+          const N = state.filtered.length;
+          let best = null;
+          let bestDist = Infinity;
+          for (let i = 0; i < shelfItems.length; i++) {
+            const d = Math.abs(shelfItems[i].virtualIndex - state.s);
+            if (d < bestDist) {
+              bestDist = d;
+              best = shelfItems[i];
+            }
+          }
+          return best ? best.el : null;
+        }
+
+        // ================================================================
+        // 10. CINEMATIC DETAIL PAGE & INK-SPREAD SVG MASK
+        // ================================================================
+        function populateDetailContent(p) {
+          const t = I18N[state.lang];
+          DOM.detailTopbarCode.textContent = `NO. ${p.number}`;
+          DOM.detailSubtitle.textContent = `${t.collectionPrefix} ${p.number}`;
+          DOM.detailTitle.textContent = p.name;
+          DOM.detailMetadata.textContent = `${p.concentration} / ${p.volume} / ${p.gender}`;
+          DOM.detailDescription.textContent = p.description[state.lang] || p.description.en;
+          DOM.labelTopNotes.textContent = t.topNotes;
+          DOM.labelHeartNotes.textContent = t.heartNotes;
+          DOM.labelBaseNotes.textContent = t.baseNotes;
+          DOM.detailNotesTop.textContent = p.notesTop.join(" · ");
+          DOM.detailNotesHeart.textContent = p.notesHeart.join(" · ");
+          DOM.detailNotesBase.textContent = p.notesBase.join(" · ");
+          DOM.detailPrice.textContent = formatDZD(p.priceDZD);
+
+          const isAvailable = p.availability === "AVAILABLE";
+          DOM.detailAvailability.textContent = isAvailable ? t.available : t.outOfStock;
+          DOM.detailAvailability.classList.toggle("is-out", !isAvailable);
+          DOM.detailOrderBtn.disabled = !isAvailable;
+          DOM.detailOrderBtn.textContent = t.orderNow;
+          DOM.detailBackBtn.textContent = t.backToCollection;
+          DOM.detailCloseTop.textContent = t.back;
+
+          DOM.detailPosterImg.setAttribute("href", p.image);
+
+          // Populate order summary too
+          DOM.orderThumb.src = p.image;
+          DOM.orderThumb.alt = p.name;
+          DOM.orderProdName.textContent = p.name;
+          DOM.orderProdMeta.textContent = `${p.volume} · ${formatDZD(p.priceDZD)}`;
+          state.orderQty = 1;
+          updateOrderTotals();
+          DOM.orderHandoff.hidden = true;
+          DOM.orderError.textContent = "";
+        }
+
+        function animateDetailLines() {
+          state.detailTextAnims.forEach((a) => {
+            try { a.cancel(); } catch (_) {}
+          });
+          state.detailTextAnims = [];
+
+          const lines = DOM.detailGrid.querySelectorAll(".mask-line-inner");
+          if (prefersReducedMotion.matches) {
+            lines.forEach((el) => {
+              el.style.transform = "translateY(0%)";
+            });
+            return;
+          }
+
+          lines.forEach((el, idx) => {
+            const anim = el.animate(
+              [{ transform: "translateY(115%)" }, { transform: "translateY(0%)" }],
+              {
+                duration: 900,
+                delay: 140 + idx * 75,
+                easing: "cubic-bezier(.2,.8,.2,1)",
+                fill: "both"
+              }
+            );
+            state.detailTextAnims.push(anim);
+          });
+        }
+
+        function startInkSpreadReveal() {
+          if (prefersReducedMotion.matches) {
+            DOM.inkDots.forEach((dot) => dot.setAttribute("r", "740"));
+            state.inkActive = false;
+            return;
+          }
+          DOM.inkDots.forEach((dot) => dot.setAttribute("r", "0"));
+          state.inkStartTime = performance.now() + 260;
+          state.inkActive = true;
+        }
+
+        function openDetailSheet() {
+          if (state.isOpen) return;
+          const perfume = getActivePerfume();
+          const bottleEl = getActiveBottleElement();
+          state.lastFocusEl = document.activeElement;
+
+          populateDetailContent(perfume);
+
+          const vw = window.innerWidth;
+          const vh = window.innerHeight;
+          const rect = bottleEl
+            ? bottleEl.getBoundingClientRect()
+            : { left: vw * 0.4, top: vh * 0.25, right: vw * 0.6, bottom: vh * 0.75, width: vw * 0.2, height: vh * 0.5 };
+
+          const top = clamp(rect.top, 0, vh);
+          const right = clamp(vw - rect.right, 0, vw);
+          const bottom = clamp(vh - rect.bottom, 0, vh);
+          const left = clamp(rect.left, 0, vw);
+          const originX = rect.left + rect.width * 0.5;
+          const originY = rect.top + rect.height * 0.5;
+
+          state.isOpen = true;
+          DOM.detailSheet.classList.add("is-visible");
+          DOM.detailSheet.setAttribute("aria-hidden", "false");
+          DOM.detailSheet.scrollTop = 0;
+
+          if (state.sheetAnim) {
+            try { state.sheetAnim.cancel(); } catch (_) {}
+          }
+
+          DOM.detailSheet.style.transformOrigin = `${originX}px ${originY}px`;
+
+          if (prefersReducedMotion.matches) {
+            DOM.detailSheet.style.clipPath = "inset(0px 0px 0px 0px)";
+            DOM.detailSheet.style.transform = "rotate(0deg) scale(1)";
+          } else {
+            state.sheetAnim = DOM.detailSheet.animate(
+              [
+                {
+                  clipPath: `inset(${top}px ${right}px ${bottom}px ${left}px)`,
+                  transform: "rotate(-4.5deg) scale(0.96)"
+                },
+                {
+                  clipPath: "inset(0px 0px 0px 0px)",
+                  transform: "rotate(0deg) scale(1)"
+                }
+              ],
+              {
+                duration: 1050,
+                easing: "cubic-bezier(.76,0,.18,1)",
+                fill: "forwards"
+              }
+            );
+          }
+
+          animateDetailLines();
+          startInkSpreadReveal();
+          DOM.detailCloseTop.focus({ preventScroll: true });
+        }
+
+        function closeDetailSheet() {
+          if (!state.isOpen) return;
+          if (state.isOrderOpen) {
+            closeOrderPanel(false);
+          }
+
+          state.inkActive = false;
+          const bottleEl = getActiveBottleElement();
+          const vw = window.innerWidth;
+          const vh = window.innerHeight;
+          const rect = bottleEl
+            ? bottleEl.getBoundingClientRect()
+            : { left: vw * 0.4, top: vh * 0.25, right: vw * 0.6, bottom: vh * 0.75, width: vw * 0.2, height: vh * 0.5 };
+
+          const top = clamp(rect.top, 0, vh);
+          const right = clamp(vw - rect.right, 0, vw);
+          const bottom = clamp(vh - rect.bottom, 0, vh);
+          const left = clamp(rect.left, 0, vw);
+
+          if (state.sheetAnim) {
+            try { state.sheetAnim.cancel(); } catch (_) {}
+          }
+
+          if (prefersReducedMotion.matches) {
+            finishCloseDetail();
+            return;
+          }
+
+          state.sheetAnim = DOM.detailSheet.animate(
+            [
+              {
+                clipPath: "inset(0px 0px 0px 0px)",
+                transform: "rotate(0deg) scale(1)"
+              },
+              {
+                clipPath: `inset(${top}px ${right}px ${bottom}px ${left}px)`,
+                transform: "rotate(-4.5deg) scale(0.96)"
+              }
+            ],
+            {
+              duration: 780,
+              easing: "cubic-bezier(.76,0,.18,1)",
+              fill: "forwards"
+            }
+          );
+
+          state.sheetAnim.onfinish = finishCloseDetail;
+        }
+
+        function finishCloseDetail() {
+          state.isOpen = false;
+          DOM.detailSheet.classList.remove("is-visible");
+          DOM.detailSheet.setAttribute("aria-hidden", "true");
+          if (state.sheetAnim) {
+            try { state.sheetAnim.cancel(); } catch (_) {}
+            state.sheetAnim = null;
+          }
+          DOM.detailSheet.style.clipPath = "";
+          DOM.detailSheet.style.transform = "";
+          if (state.lastFocusEl && typeof state.lastFocusEl.focus === "function") {
+            state.lastFocusEl.focus({ preventScroll: true });
+          }
+        }
+
+        // ================================================================
+        // 11. ORDERING PANEL & WHATSAPP CONCIERGE FLOW
+        // ================================================================
+        function populateWilayas() {
+          DOM.custWilaya.innerHTML = "";
+          ALGERIA_WILAYAS.forEach((w) => {
+            const opt = document.createElement("option");
+            opt.value = w;
+            opt.textContent = w;
+            if (w.startsWith("16 -")) opt.selected = true;
+            DOM.custWilaya.appendChild(opt);
+          });
+        }
+
+        function updateOrderTotals() {
+          const p = getActivePerfume();
+          const total = p.priceDZD * state.orderQty;
+          DOM.qtyVal.textContent = String(state.orderQty);
+          DOM.orderQtySummary.textContent = String(state.orderQty);
+          DOM.orderUnitPrice.textContent = formatDZD(p.priceDZD);
+          DOM.orderTotalPrice.textContent = formatDZD(total);
+        }
+
+        function openOrderPanel() {
+          if (state.isOrderOpen) return;
+          state.isOrderOpen = true;
+          DOM.orderBackdrop.classList.add("is-open");
+          DOM.orderPanel.classList.add("is-open");
+          DOM.orderBackdrop.setAttribute("aria-hidden", "false");
+          DOM.orderPanel.setAttribute("aria-hidden", "false");
+          DOM.orderHandoff.hidden = true;
+          DOM.orderError.textContent = "";
+
+          if (state.orderAnim) {
+            try { state.orderAnim.cancel(); } catch (_) {}
+          }
+          if (state.orderBackdropAnim) {
+            try { state.orderBackdropAnim.cancel(); } catch (_) {}
+          }
+
+          if (prefersReducedMotion.matches) {
+            DOM.orderBackdrop.style.clipPath = "inset(0 0 0 0)";
+            DOM.orderPanel.style.transform = "translateX(0%)";
+          } else {
+            state.orderBackdropAnim = DOM.orderBackdrop.animate(
+              [{ clipPath: "inset(0 0 0 100%)" }, { clipPath: "inset(0 0 0 0%)" }],
+              { duration: 520, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }
+            );
+            state.orderAnim = DOM.orderPanel.animate(
+              [{ transform: "translateX(100%)" }, { transform: "translateX(0%)" }],
+              { duration: 540, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }
+            );
+          }
+
+          DOM.custName.focus({ preventScroll: true });
+        }
+
+        function closeOrderPanel(restoreFocus = true) {
+          if (!state.isOrderOpen) return;
+          state.isOrderOpen = false;
+
+          if (state.orderAnim) {
+            try { state.orderAnim.cancel(); } catch (_) {}
+          }
+          if (state.orderBackdropAnim) {
+            try { state.orderBackdropAnim.cancel(); } catch (_) {}
+          }
+
+          const cleanup = () => {
+            DOM.orderBackdrop.classList.remove("is-open");
+            DOM.orderPanel.classList.remove("is-open");
+            DOM.orderBackdrop.setAttribute("aria-hidden", "true");
+            DOM.orderPanel.setAttribute("aria-hidden", "true");
+            if (restoreFocus) DOM.detailOrderBtn.focus({ preventScroll: true });
+          };
+
+          if (prefersReducedMotion.matches) {
+            cleanup();
+            return;
+          }
+
+          state.orderBackdropAnim = DOM.orderBackdrop.animate(
+            [{ clipPath: "inset(0 0 0 0%)" }, { clipPath: "inset(0 0 0 100%)" }],
+            { duration: 380, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }
+          );
+          state.orderAnim = DOM.orderPanel.animate(
+            [{ transform: "translateX(0%)" }, { transform: "translateX(100%)" }],
+            { duration: 400, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }
+          );
+          state.orderAnim.onfinish = cleanup;
+        }
+
+        function buildWhatsAppMessage() {
+          const p = getActivePerfume();
+          const unit = formatDZD(p.priceDZD);
+          const total = formatDZD(p.priceDZD * state.orderQty);
+          const name = DOM.custName.value.trim();
+          const phone = DOM.custPhone.value.trim();
+          const wilaya = DOM.custWilaya.value;
+          const commune = DOM.custCommune.value.trim();
+          const address = DOM.custAddress.value.trim();
+          const notes = DOM.custNotes.value.trim();
+
+          const lines = [
+            "LISSE — LUXURY PERFUMES (Order Request)",
+            "────────────────────────",
+            `Perfume: ${p.name} (${p.concentration}, ${p.volume})`,
+            `Quantity: ${state.orderQty}`,
+            `Unit Price: ${unit}`,
+            `Total Amount: ${total}`,
+            "────────────────────────",
+            `Customer: ${name}`,
+            `Phone: ${phone}`,
+            `Wilaya: ${wilaya}`,
+            `Commune: ${commune}`,
+            `Address: ${address}`
+          ];
+          if (notes) lines.push(`Notes: ${notes}`);
+          return lines.join("\n");
+        }
+
+        // ================================================================
+        // 12. LANGUAGE SWITCHING (EN / FR / AR)
+        // ================================================================
+        function applyLanguage(lang) {
+          state.lang = lang;
+          const t = I18N[lang];
+          document.documentElement.lang = lang;
+          DOM.detailGrid.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
+          DOM.orderPanel.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
+
+          DOM.langButtons.forEach((btn) => {
+            btn.setAttribute("aria-pressed", btn.dataset.lang === lang ? "true" : "false");
+          });
+
+          DOM.headerBackBtn.textContent = t.back;
+          DOM.collectionYearLabel.textContent = t.collectionTag;
+          DOM.categoryTabs.forEach((tab) => {
+            const key = tab.dataset.filter;
+            if (t.tabs[key]) tab.textContent = t.tabs[key];
+          });
+          positionCategoryIndicator(false);
+
+          DOM.cursorLabel.innerHTML = `<span>${t.openLines[0]}</span><span>${t.openLines[1]}</span>`;
+
+          // Order form labels
+          DOM.orderHeading.textContent = t.orderHeading;
+          DOM.orderCloseBtn.textContent = t.close;
+          DOM.lblName.textContent = t.fullName;
+          DOM.lblPhone.textContent = t.phone;
+          DOM.lblWilaya.textContent = t.wilaya;
+          DOM.lblCommune.textContent = t.commune;
+          DOM.lblAddress.textContent = t.address;
+          DOM.lblNotes.textContent = t.notes;
+          DOM.lblUnitPrice.textContent = t.unitPrice;
+          DOM.lblQtySummary.textContent = t.quantity;
+          DOM.lblTotal.textContent = t.total;
+          DOM.prepareWaBtn.textContent = t.prepareWa;
+          DOM.orderHandoffNote.textContent = t.handoffNote;
+          DOM.waLaunchLink.textContent = t.sendWa;
+          DOM.copyOrderBtn.textContent = t.copy;
+
+          updateCaption(false);
+          if (state.isOpen) {
+            populateDetailContent(getActivePerfume());
+          }
+        }
+
+        // ================================================================
+        // 13. CENTRAL REQUESTANIMATIONFRAME ENGINE
+        // ================================================================
+        let lastTime = performance.now();
+
+        function tick(now) {
+          const dt = Math.min(0.05, Math.max(0.001, (now - lastTime) / 1000));
+          lastTime = now;
+
+          const N = state.filtered.length;
+          const reduced = prefersReducedMotion.matches;
+
+          // 1. Exponential shelf interpolation
+          const k = state.isDragging ? 18 : reduced ? 40 : 5.2;
+          const diff = state.T - state.s;
+          if (Math.abs(diff) < 0.0004) {
+            state.s = state.T;
+          } else {
+            state.s += diff * (1 - Math.exp(-k * dt));
+          }
+
+          // 2. Seamless modular wrapping across repeated copies
+          const minBand = state.midCopy * N;
+          const maxBand = (state.midCopy + 1) * N;
+          if (state.s < minBand - 0.5 && state.T < minBand) {
+            state.s += N;
+            state.T += N;
+          } else if (state.s >= maxBand + 0.5 && state.T >= maxBand) {
+            state.s -= N;
+            state.T -= N;
+          }
+
+          // 3. Smooth custom cursor & tilt interpolation
+          const cursorEase = 1 - Math.exp(-16 * dt);
+          state.cx += (state.mx - state.cx) * cursorEase;
+          state.cy += (state.my - state.cy) * cursorEase;
+          if (!isTouchDevice) {
+            DOM.customCursor.style.transform = `translate3d(${state.cx.toFixed(1)}px, ${state.cy.toFixed(1)}px, 0)`;
+          }
+
+          const normX = clamp((state.mx / (state.vpWidth || 1)) * 2 - 1, -1, 1);
+          const normY = clamp((state.my / (state.vpHeight || 1)) * 2 - 1, -1, 1);
+          const targetTiltY = reduced || isTouchDevice || state.isOpen ? 0 : normX * 9.5;
+          const targetTiltX = reduced || isTouchDevice || state.isOpen ? 0 : -normY * 5.5;
+          const tiltEase = 1 - Math.exp(-8 * dt);
+          state.tiltY += (targetTiltY - state.tiltY) * tiltEase;
+          state.tiltX += (targetTiltX - state.tiltX) * tiltEase;
+
+          // 4. Position & transform every bottle on the 3D shelf
+          const H = state.bottleH;
+          const shelfPitch = H * 0.44;
+          const activeExpansion = H * 0.36;
+          const centerVirtual = state.midCopy * N + state.active;
+
+          let activeScreenX = 0;
+          let activeOpen = 0;
+
+          for (let i = 0; i < shelfItems.length; i++) {
+            const item = shelfItems[i];
+            const delta = item.virtualIndex - state.s;
+            const absDelta = Math.abs(delta);
+
+            // Cull far off-screen bottles to keep frame time fast
+            if (absDelta > 9.5) {
+              item.el.style.visibility = "hidden";
+              continue;
+            }
+            item.el.style.visibility = "visible";
+
+            // Smoothstep emergence progress for the central bottle
+            const open = 1 - smoothstep(0.04, 0.88, absDelta);
+            const spread = (delta === 0 ? 0 : Math.sign(delta)) * activeExpansion * smoothstep(0.06, 1.05, absDelta);
+            const x = delta * shelfPitch + spread;
+
+            // Hover lift for non-active shelf bottles
+            const isHovered = item.virtualIndex === state.hoverIndex && open < 0.5 && !reduced;
+            const hoverLift = isHovered ? -H * 0.04 : 0;
+
+            // 3D physical rotation & emergence
+            const baseShelfYaw = 64; // angled side/profile state inside shelf
+            const yaw = baseShelfYaw * (1 - open) + state.tiltY * open;
+            const pitch = state.tiltX * open;
+            const roll = -4.5 * open;
+            const z = 165 * open + (isHovered ? 24 : 0);
+            const y = -H * 0.085 * open + hoverLift;
+            const sc = 1 + 0.11 * open;
+
+            // Z-index ordering so the emerging bottle always sits cleanly above neighbors
+            item.el.style.zIndex = String(Math.round(100 - absDelta * 6 + open * 150));
+
+            item.el.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, ${z.toFixed(2)}px) scale(${sc.toFixed(4)})`;
+            item.prismEl.style.transform = `rotateX(${pitch.toFixed(2)}deg) rotateY(${yaw.toFixed(2)}deg) rotateZ(${roll.toFixed(2)}deg)`;
+
+            // Physical shadow & bottle drop-shadow intensity (transform-only, no opacity fades)
+            const shadowScaleX = 0.68 + open * 0.48;
+            const shadowScaleY = 0.72 + open * 0.52;
+            const shadowY = open * (H * 0.12);
+            item.shadowEl.style.transform = `translate3d(0, ${shadowY.toFixed(1)}px, ${(-z * 0.45).toFixed(1)}px) scale(${shadowScaleX.toFixed(3)}, ${shadowScaleY.toFixed(3)})`;
+
+            if (open > 0.05) {
+              const blur = (8 + open * 24).toFixed(1);
+              const dy = (6 + open * 18).toFixed(1);
+              const alpha = (0.08 + open * 0.22).toFixed(3);
+              item.imgEl.style.filter = `drop-shadow(0 ${dy}px ${blur}px rgba(0, 0, 0, ${alpha}))`;
+            } else {
+              item.imgEl.style.filter = "none";
+            }
+
+            if (open > activeOpen) {
+              activeOpen = open;
+              activeScreenX = x;
+            }
+          }
+
+          // 5. Play / Open indicator scale & placement near active bottle
+          const settle = clamp(1 - Math.abs(state.T - state.s) * 2.2, 0, 1);
+          const indicatorScale = state.isOpen ? 0 : smoothstep(0.15, 0.95, settle * activeOpen);
+          const indX = activeScreenX + H * 0.24;
+          const indY = H * 0.16;
+          DOM.playIndicator.style.transform = `translate3d(calc(-50% + ${indX.toFixed(1)}px), calc(-50% + ${indY.toFixed(1)}px), 0) scale(${indicatorScale.toFixed(3)})`;
+          DOM.playIndicator.style.pointerEvents = indicatorScale > 0.45 && !state.isOpen ? "auto" : "none";
+
+          // 6. Ink-spread SVG mask animation (Detail Sheet)
+          if (state.inkActive && state.isOpen) {
+            const elapsed = now - state.inkStartTime;
+            if (elapsed >= 0) {
+              const rawT = clamp(elapsed / state.inkDuration, 0, 1);
+              const offsets = [0, 0.06, 0.12, 0.09, 0.15, 0.18, 0.03];
+              for (let i = 0; i < DOM.inkDots.length; i++) {
+                const localT = clamp((rawT - offsets[i]) / (1 - offsets[i]), 0, 1);
+                const r = 740 * easeOutCubic(localT);
+                DOM.inkDots[i].setAttribute("r", r.toFixed(1));
+              }
+              if (rawT >= 1) {
+                state.inkActive = false;
+              }
+            }
+          }
+
+          requestAnimationFrame(tick);
+        }
+
+        // ================================================================
+        // 14. INPUT CONTROLS & CURSOR STATE
+        // ================================================================
+        function updateCursorClass() {
+          if (isTouchDevice) return;
+          DOM.customCursor.classList.remove("is-hover-bottle", "is-button", "is-open");
+
+          const hoveredEl = document.elementFromPoint(state.mx, state.my);
+          if (!hoveredEl) return;
+
+          const cursorMode = hoveredEl.closest("[data-cursor]")?.getAttribute("data-cursor");
+          if (cursorMode === "open") {
+            DOM.customCursor.classList.add("is-open");
+            return;
+          }
+          if (cursorMode === "button" || hoveredEl.closest("button, a")) {
+            DOM.customCursor.classList.add("is-button");
+            return;
+          }
+
+          const bottleEl = hoveredEl.closest(".bottle-item");
+          if (bottleEl && !state.isOpen) {
+            const vIdx = Number(bottleEl.dataset.virtualIndex);
+            const dist = Math.abs(vIdx - state.s);
+            if (dist < 0.45) {
+              DOM.customCursor.classList.add("is-open");
+            } else {
+              DOM.customCursor.classList.add("is-hover-bottle");
+            }
+          }
+        }
+
+        function bindEvents() {
+          if (!isTouchDevice) {
+            document.body.classList.add("has-custom-cursor");
+          }
+
+          window.addEventListener("pointermove", (e) => {
+            state.mx = e.clientX;
+            state.my = e.clientY;
+
+            if (state.pointerDown && !state.isOpen) {
+              const dx = e.clientX - state.dragStartX;
+              const dy = e.clientY - state.dragStartY;
+              if (!state.isDragging && Math.hypot(dx, dy) > 5) {
+                state.isDragging = true;
+                state.dragMoved = true;
+              }
+              if (state.isDragging) {
+                const pitch = state.bottleH * 0.44 || 160;
+                const nextT = state.dragStartT - dx / pitch;
+                const dtDrag = Math.max(8, performance.now() - state.dragLastMoveTime);
+                state.dragVelocity = (nextT - state.T) / dtDrag;
+                state.dragLastMoveTime = performance.now();
+                state.T = nextT;
+
+                const N = state.filtered.length;
+                const nextActive = mod(Math.round(state.T), N);
+                if (nextActive !== state.active) {
+                  state.active = nextActive;
+                  updateCaption(true);
+                }
+              }
+            }
+
+            if (!isTouchDevice) {
+              const bottleEl = e.target.closest ? e.target.closest(".bottle-item") : null;
+              state.hoverIndex = bottleEl ? Number(bottleEl.dataset.virtualIndex) : -1;
+              updateCursorClass();
+            }
+          });
+
+          DOM.shelfViewport.addEventListener("pointerdown", (e) => {
+            if (state.isOpen || e.button !== 0) return;
+            state.pointerDown = true;
+            state.isDragging = false;
+            state.dragMoved = false;
+            state.dragStartX = e.clientX;
+            state.dragStartY = e.clientY;
+            state.dragStartT = state.T;
+            state.dragLastMoveTime = performance.now();
+            state.dragVelocity = 0;
+          });
+
+          window.addEventListener("pointerup", () => {
+            if (!state.pointerDown) return;
+            state.pointerDown = false;
+            if (state.isDragging) {
+              state.isDragging = false;
+              // Add subtle flick momentum before snapping
+              state.T += clamp(state.dragVelocity * 110, -1.6, 1.6);
+              snapToNearest();
+              setTimeout(() => {
+                state.dragMoved = false;
+              }, 60);
+            }
+          });
+
+          // Click bottle: non-selected smoothly centers, selected opens detail sheet
+          DOM.shelfTrack.addEventListener("click", (e) => {
+            if (state.isOpen || state.dragMoved) return;
+            const bottleEl = e.target.closest(".bottle-item");
+            if (!bottleEl) return;
+            const vIdx = Number(bottleEl.dataset.virtualIndex);
+            const dist = Math.abs(vIdx - state.s);
+            if (dist < 0.42) {
+              openDetailSheet();
+            } else {
+              state.T = vIdx;
+              const N = state.filtered.length;
+              const nextActive = mod(vIdx, N);
+              if (nextActive !== state.active) {
+                state.active = nextActive;
+                updateCaption(true);
+                updateBottleTabIndices();
+              }
+            }
+          });
+
+          // Mouse wheel horizontal/vertical -> shelf motion + 160ms snap
+          window.addEventListener(
+            "wheel",
+            (e) => {
+              if (state.isOpen) return;
+              const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+              if (Math.abs(delta) < 0.5) return;
+              e.preventDefault();
+
+              state.T += delta * 0.0022;
+              const N = state.filtered.length;
+              const nextActive = mod(Math.round(state.T), N);
+              if (nextActive !== state.active) {
+                state.active = nextActive;
+                updateCaption(true);
+              }
+
+              clearTimeout(state.wheelTimer);
+              state.wheelTimer = setTimeout(() => {
+                snapToNearest();
+              }, 160);
+            },
+            { passive: false }
+          );
+
+          // Keyboard navigation
+          window.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+              if (state.isOrderOpen) {
+                closeOrderPanel(true);
+              } else if (state.isOpen) {
+                closeDetailSheet();
+              }
+              return;
+            }
+
+            if (state.isOpen) return;
+
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              setActiveByDelta(-1);
+            } else if (e.key === "ArrowRight") {
+              e.preventDefault();
+              setActiveByDelta(1);
+            } else if (e.key === "Enter") {
+              const focusedBottle = document.activeElement?.closest(".bottle-item");
+              if (focusedBottle || document.activeElement === document.body) {
+                e.preventDefault();
+                openDetailSheet();
+              }
+            }
+          });
+
+          // Prev / Next / Play indicator / Header back
+          DOM.prevBtn.addEventListener("click", () => setActiveByDelta(-1));
+          DOM.nextBtn.addEventListener("click", () => setActiveByDelta(1));
+          DOM.playIndicator.addEventListener("click", openDetailSheet);
+
+          DOM.headerBackBtn.addEventListener("click", () => {
+            if (state.isOpen) {
+              closeDetailSheet();
+            } else {
+              setCategoryFilter("all");
+            }
+          });
+
+          DOM.brandHomeLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (state.isOpen) closeDetailSheet();
+            setCategoryFilter("all");
+          });
+
+          DOM.footerContactBtn.addEventListener("click", () => {
+            if (!state.isOpen) {
+              openDetailSheet();
+              setTimeout(openOrderPanel, 450);
+            } else {
+              openOrderPanel();
+            }
+          });
+
+          // Category tabs
+          DOM.categoryTabs.forEach((tab) => {
+            tab.addEventListener("click", () => {
+              const f = tab.dataset.filter;
+              if (f && f !== state.filter) {
+                setCategoryFilter(f);
+              }
+            });
+          });
+
+          // Language buttons
+          DOM.langButtons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const l = btn.dataset.lang;
+              if (l && l !== state.lang) applyLanguage(l);
+            });
+          });
+
+          // Detail sheet controls
+          DOM.detailCloseTop.addEventListener("click", closeDetailSheet);
+          DOM.detailBackBtn.addEventListener("click", closeDetailSheet);
+          DOM.detailOrderBtn.addEventListener("click", openOrderPanel);
+
+          // Order panel controls
+          DOM.orderCloseBtn.addEventListener("click", () => closeOrderPanel(true));
+          DOM.orderBackdrop.addEventListener("click", () => closeOrderPanel(true));
+
+          DOM.qtyDec.addEventListener("click", () => {
+            if (state.orderQty > 1) {
+              state.orderQty--;
+              updateOrderTotals();
+              DOM.orderHandoff.hidden = true;
+            }
+          });
+
+          DOM.qtyInc.addEventListener("click", () => {
+            if (state.orderQty < 20) {
+              state.orderQty++;
+              updateOrderTotals();
+              DOM.orderHandoff.hidden = true;
+            }
+          });
+
+          DOM.orderForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const t = I18N[state.lang];
+            const valid =
+              DOM.custName.value.trim().length > 1 &&
+              DOM.custPhone.value.trim().length >= 8 &&
+              DOM.custWilaya.value &&
+              DOM.custCommune.value.trim().length > 1 &&
+              DOM.custAddress.value.trim().length > 3;
+
+            if (!valid) {
+              DOM.orderError.textContent = t.validationError;
+              DOM.orderHandoff.hidden = true;
+              return;
+            }
+
+            DOM.orderError.textContent = "";
+            const message = buildWhatsAppMessage();
+            const waUrl = `https://wa.me/${LISSE_CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+            DOM.waLaunchLink.href = waUrl;
+            DOM.orderHandoff.hidden = false;
+            DOM.waLaunchLink.focus({ preventScroll: true });
+          });
+
+          DOM.copyOrderBtn.addEventListener("click", async () => {
+            const t = I18N[state.lang];
+            try {
+              await navigator.clipboard.writeText(buildWhatsAppMessage());
+              DOM.copyOrderBtn.textContent = t.copied;
+              setTimeout(() => {
+                DOM.copyOrderBtn.textContent = t.copy;
+              }, 1600);
+            } catch (_) {}
+          });
+
+          // ResizeObserver for responsive geometry without layout reads in RAF
+          const ro = new ResizeObserver(() => {
+            computeBottleHeight();
+            updateShelfDimensions();
+            positionCategoryIndicator(false);
+          });
+          ro.observe(document.documentElement);
+        }
+
+        // ================================================================
+        // 15. INITIALIZATION
+        // ================================================================
+        async function init() {
+          populateWilayas();
+          computeBottleHeight();
+          await preloadPerfumeImages();
+
+          state.filtered = [...PERFUMES];
+          state.active = 0;
+          buildShelfDOM();
+
+          const initialCenter = state.midCopy * state.filtered.length;
+          state.s = initialCenter;
+          state.T = initialCenter;
+
+          updateCaption(false);
+          positionCategoryIndicator(false);
+          bindEvents();
+          requestAnimationFrame(tick);
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", init);
+        } else {
+          init();
+        }
+      })();
+    </script>
+  </body>
+</html>
